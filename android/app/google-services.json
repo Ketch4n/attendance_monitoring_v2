@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "923340212066",
+    "project_id": "attendance-monitoring-c33b5",
+    "storage_bucket": "attendance-monitoring-c33b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923340212066:android:c5f5919fed725c2b098e3b",
+        "android_client_info": {
+          "package_name": "com.example.attendance_monitoring"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMi2Vr5XERmRQOMISjj8V3Mk21T7z4LjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
