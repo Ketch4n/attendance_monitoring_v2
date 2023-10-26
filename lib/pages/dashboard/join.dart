@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
 
-import 'package:attendance_monitoring/api/update_section.dart';
+import 'package:attendance_monitoring/api/join.dart';
 import 'package:attendance_monitoring/widgets/show_dialog.dart';
 import 'package:flutter/material.dart';
 import '../../style/style.dart';
@@ -80,16 +80,19 @@ class _JoinState extends State<Join> {
                           final String path = widget.purpose == 'Establishment'
                               ? 'establishment'
                               : 'section';
-                          final String leave = code.text;
+                                final String ref = widget.purpose == 'Establishment'
+                              ? 'room'
+                              : 'class';
+                          final String pin = code.text;
                           const String mess = "You are now in a ";
-                          if (leave.isEmpty) {
+                          if (pin.isEmpty) {
                             String title = "Code Empty !";
                             String message = "Input code";
 
                             await showAlertDialog(context, title, message);
                           } else {
-                            String purpose = 'join';
-                            await updateSection(context, leave, path, purpose);
+                            // String purpose = 'join';
+                            await joinClassRoom(context, path,ref,pin);
                             // await showAlertDialog(context, mess, path);
                             Navigator.of(context).pop(false);
                             widget.refreshCallback();

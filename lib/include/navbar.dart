@@ -39,13 +39,13 @@ class _NavbarState extends State<Navbar> {
           padding: EdgeInsets.zero,
           children: [
             Container(
-              height: 130,
+              height: 140,
               decoration: const BoxDecoration(),
               child: Column(
                 children: [
                   Stack(children: <Widget>[
                     SizedBox(
-                      height: 130,
+                      height: 140,
                       width: double.maxFinite,
                       child: Image.asset(
                         'assets/images/neon.jpg',

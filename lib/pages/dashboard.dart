@@ -28,27 +28,12 @@ class _DashboardState extends State<Dashboard> {
   Future<void> _refreshData() async {
     await fetchUser(_userStreamController);
   }
- fetchData() async {
-   final prefs = await SharedPreferences.getInstance();
-  final userId = prefs.getString('userId');
-   final response = await http.post(
-    Uri.parse('${Server.host}pages/student/class_room.php'),
-    body: {'studentID': userId},
-  );
-    if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON
-      final data = json.decode(response.body);
-      return data;
-    } else {
-      // If the server did not return a 200 OK response, throw an exception
-      throw Exception('Failed to load data');
-    }
-  }
   
   @override
   void initState() {
     super.initState();
     fetchUser(_userStreamController);
+    // fetchData();
   }
 
   @override
@@ -60,7 +45,32 @@ class _DashboardState extends State<Dashboard> {
   void refresh() {
     _refreshIndicatorKey.currentState?.show(); // Show the refresh indicator
   }
+  //  Future<void> fetchData() async {
+  //   // Replace with the URL of your PHP script
+  //   final response = await http.get( Uri.parse('${Server.host}pages/student/class_room.php'));
 
+  //   if (response.statusCode == 200) {
+  //     final data = json.decode(response.body);
+
+  //     setState(() {
+  //       classData = data['class_data'];
+  //       roomData = data['room_data'];
+  //     });
+
+  //     // Get the total number of arrays
+  //     int totalClassData = classData.length;
+  //     int totalRoomData = roomData.length;
+
+  //     int totalArrays = totalClassData + totalRoomData;
+
+  //     print('Total class data arrays: $totalClassData');
+  //     print('Total room data arrays: $totalRoomData');
+  //   } else {
+  //     print('Failed to fetch data');
+  //   }
+  // }
+  // List classData = [];
+  // List roomData = [];
   @override
   Widget build(BuildContext context) {
     
@@ -135,22 +145,25 @@ floatingActionButton:
                 body: 
                
       
-                ListView.builder(
-                  
-                  itemCount: user.section_id != "null" &&
-                          user.establishment_id != "null"
-                      ? 2
-                      : 1,
-                  itemBuilder: (context, index) {
-                    final section = user.section_name;
-                    final establishment = user.establishment_name;
-                    return ContainerCard(
-                      index: index,
-                      section: section,
-                      establishment: establishment,
-                      refreshCallback: _refreshData,
-                    ); // Use the custom item here
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: ListView.builder(
+                    
+                    itemCount: user.section_id != "null" &&
+                            user.establishment_id != "null"
+                        ? 2
+                        : 1,
+                    itemBuilder: (context, index) {
+                      final section = user.section_name;
+                      final establishment = user.establishment_name;
+                      return ContainerCard(
+                        index: index,
+                        section: section,
+                        establishment: establishment,
+                        refreshCallback: _refreshData,
+                      ); // Use the custom item here
+                    },
+                  ),
                 ),
               );
             }

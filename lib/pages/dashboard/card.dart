@@ -1,7 +1,8 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 
-import 'package:attendance_monitoring/api/update_section.dart';
+import 'package:attendance_monitoring/api/leave.dart';
+
 import 'package:attendance_monitoring/pages/establishment.dart';
 import 'package:flutter/material.dart';
 
@@ -25,11 +26,9 @@ class ContainerCard extends StatefulWidget {
 }
 
 class _ContainerCardState extends State<ContainerCard> {
-  static String path = "";
-  final String leave = "0";
   final String sectionIMG = 'assets/images/blue.jpg';
   final String estabIMG = 'assets/images/green2.png';
-  final String sectionNAME = 'Your Section';
+  final String sectionNAME = 'Section';
   final String estabNAME = 'OJT Establishment';
 
   @override
@@ -46,9 +45,7 @@ class _ContainerCardState extends State<ContainerCard> {
       widget.section,
       widget.establishment,
     ];
-    List<String> link = ['section', 'establishment'];
-
-    List<String> Navigate = ['Section','Establishment'];
+    List<String> link = ['class', 'room'];
 
     return Container(
       margin: const EdgeInsets.all(10),
@@ -59,14 +56,14 @@ class _ContainerCardState extends State<ContainerCard> {
          
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => Section(
-                    name: widget.section == "0"
+                    name: widget.section == "null"
                         ? widget.establishment
-                        : widget.establishment == "0"
+                        : widget.establishment == "null"
                             ? widget.section
                             : subnamePaths[widget.index % subnamePaths.length],
-                    image: widget.section == "0"
+                    image: widget.section == "null"
                         ? estabIMG
-                        : widget.establishment == "0"
+                        : widget.establishment == "null"
                             ? sectionIMG
                             : imagePaths[widget.index % imagePaths.length],
                   )))
@@ -75,9 +72,9 @@ class _ContainerCardState extends State<ContainerCard> {
         child: Stack(
           children: <Widget>[
             Image.asset(
-              widget.section == "0"
+              widget.section == "null"
                   ? estabIMG
-                  : widget.establishment == "0"
+                  : widget.establishment == "null"
                       ? sectionIMG
                       : imagePaths[widget.index % imagePaths.length],
               fit: BoxFit.cover,
@@ -88,16 +85,16 @@ class _ContainerCardState extends State<ContainerCard> {
               ListTile(
                 titleTextStyle: Style.nexaBold.copyWith(fontSize: 20),
                 iconColor: Colors.white,
-                title: Text(widget.section == "0"
-                    ? estabNAME
-                    : widget.establishment == "0"
-                        ? sectionNAME
-                        : namePaths[widget.index % namePaths.length]),
-                subtitle: Text(widget.section == "0"
+                title: Text(widget.section == "null"
                     ? widget.establishment
-                    : widget.establishment == "0"
+                    : widget.establishment == "null"
                         ? widget.section
                         : subnamePaths[widget.index % subnamePaths.length]),
+                subtitle: Text(widget.section == "null"
+                    ? estabNAME
+                    : widget.establishment == "null"
+                        ? sectionNAME
+                        : namePaths[widget.index % namePaths.length],style: TextStyle(color: Colors.white),),
                 // subtitle: Text("Supervisor"),
               )
             ]),
@@ -119,21 +116,19 @@ class _ContainerCardState extends State<ContainerCard> {
                 },
                 onSelected: (String value) async {
                   if (value == 'Leave') {
-                    setState(() {
-                      path = widget.section == "0"
-                          ? "establishment"
-                          : widget.establishment == "0"
-                              ? "section"
+                   String path = widget.section == "null"
+                          ? "room"
+                          : widget.establishment == "null"
+                              ? "class"
                               : link[widget.index % link.length];
-                    });
-                    String purpose = 'leave';
-                    await updateSection(context, leave, path, purpose);
-                    setState(() {});
+                    print(path);
+                    await leaveClassRoom(context, path);
+                   
                     widget.refreshCallback();
                     print('Refresh Callback Triggered');
                   }
-                  print('Selected: $path');
-                  print('Selected: $leave');
+                  // print('Selected: $path');
+              
                 },
               ),
             )
