@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
+import 'package:attendance_monitoring/api/server.dart';
 import 'package:attendance_monitoring/pages/dashboard/join.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../api/user.dart';
 import '../model/user_model.dart';
 import '../style/style.dart';
 import 'dashboard/card.dart';
+import 'package:http/http.dart' as http;
 
 class Dashboard extends StatefulWidget {
   const Dashboard({
@@ -24,7 +28,23 @@ class _DashboardState extends State<Dashboard> {
   Future<void> _refreshData() async {
     await fetchUser(_userStreamController);
   }
-
+ fetchData() async {
+   final prefs = await SharedPreferences.getInstance();
+  final userId = prefs.getString('userId');
+   final response = await http.post(
+    Uri.parse('${Server.host}pages/student/class_room.php'),
+    body: {'studentID': userId},
+  );
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON
+      final data = json.decode(response.body);
+      return data;
+    } else {
+      // If the server did not return a 200 OK response, throw an exception
+      throw Exception('Failed to load data');
+    }
+  }
+  
   @override
   void initState() {
     super.initState();
@@ -43,6 +63,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: _refreshData,
@@ -52,8 +73,8 @@ class _DashboardState extends State<Dashboard> {
           if (snapshot.hasData) {
             final user = snapshot.data!;
 
-            if (user.section_name == "No section" &&
-                user.establishment_name == "No establishment") {
+            if (user.section_id == "null" &&
+                user.establishment_id == "null") {
               return Scaffold(
 floatingActionButton: 
                   FloatingActionButton(
@@ -111,9 +132,13 @@ floatingActionButton:
                     child: const Icon(
                         Icons.add),
                   ),
-                body: ListView.builder(
-                  itemCount: user.section_name != "No section" &&
-                          user.establishment_name != "No establishment"
+                body: 
+               
+      
+                ListView.builder(
+                  
+                  itemCount: user.section_id != "null" &&
+                          user.establishment_id != "null"
                       ? 2
                       : 1,
                   itemBuilder: (context, index) {
@@ -143,7 +168,7 @@ floatingActionButton:
         androidBorderRadius: 20,
         actions: role == 'Student'
             ? <BottomSheetAction>[
-              section == '0'?  BottomSheetAction(
+              section == 'null'?  BottomSheetAction(
                     title: const Text(
                       'Section',
                       style: TextStyle(
@@ -172,7 +197,7 @@ floatingActionButton:
                       Navigator.of(context).pop(false);
                   
                     }),
-               estab == '0'? BottomSheetAction(
+               estab == 'null'? BottomSheetAction(
                     title: const Text(
                       'Establishment',
                       style: TextStyle(
