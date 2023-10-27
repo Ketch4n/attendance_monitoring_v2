@@ -4,6 +4,7 @@ import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:attendance_monitoring/api/server.dart';
 import 'package:attendance_monitoring/pages/dashboard/join.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_skeleton/loader_skeleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../api/user.dart';
 import '../model/user_model.dart';
@@ -154,11 +155,15 @@ floatingActionButton:
                         ? 2
                         : 1,
                     itemBuilder: (context, index) {
+                      final sectID = user.section_id;
                       final section = user.section_name;
+                      final estabID = user.establishment_id;
                       final establishment = user.establishment_name;
                       return ContainerCard(
                         index: index,
+                        sectID : sectID,
                         section: section,
+                        estabID : estabID,
                         establishment: establishment,
                         refreshCallback: _refreshData,
                       ); // Use the custom item here
@@ -168,7 +173,7 @@ floatingActionButton:
               );
             }
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return CardSkeleton(isCircularImage: true,isBottomLinesActive:true );
           }
         },
       ),

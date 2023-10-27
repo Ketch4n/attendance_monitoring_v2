@@ -608,6 +608,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  loader_skeleton:
+    dependency: "direct main"
+    description:
+      name: loader_skeleton
+      sha256: fc98ead27e7f924b9920207820b4a6ad47591053836d2bdc8bc8d92eb77f5d5c
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   lottie:
     dependency: "direct main"
     description:
@@ -784,6 +792,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      sha256: "5f88c883a22e9f9f299e5ba0e4f7e6054857224976a5d9f839d4ebdc94a14ac9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   sky_engine:
     dependency: transitive
     description: flutter

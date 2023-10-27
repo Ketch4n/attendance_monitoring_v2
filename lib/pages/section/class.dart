@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:attendance_monitoring/model/class_room_model.dart';
+import 'package:attendance_monitoring/model/classmate.dart';
 import 'package:flutter/material.dart';
 import '../../api/server.dart';
 import '../../model/user_model.dart';
@@ -8,15 +10,16 @@ import '../../style/style.dart';
 import 'package:http/http.dart' as http;
 
 class Classroom extends StatefulWidget {
-  const Classroom({super.key, required this.name});
+  const Classroom({super.key, required this.ids, required this.name});
+  final String ids;
   final String name;
   @override
   State<Classroom> createState() => _ClassroomState();
 }
 
 class _ClassroomState extends State<Classroom> {
-  final StreamController<List<UserModel>> _classmateStreamController =
-      StreamController<List<UserModel>>();
+  final StreamController<List<ClassmateModel>> _classmateStreamController =
+      StreamController<List<ClassmateModel>>();
 
   // Future<void> _refreshData() async {
   //   await fetchUser(_userStreamController);
@@ -25,13 +28,13 @@ class _ClassroomState extends State<Classroom> {
   Future<void> fetchClassmates(classmateStreamController) async {
     final response = await http.post(
       Uri.parse('${Server.host}pages/student/classmate.php'),
-      body: {'name': widget.name},
+      body: {'section_id': widget.ids},
     );
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      final List<UserModel> classmates = data
-          .map((classmateData) => UserModel.fromJson(classmateData))
+      final List<ClassmateModel> classmates = data
+          .map((classmateData) => ClassmateModel.fromJson(classmateData))
           .toList();
 
       // Add the list of classmates to the stream
@@ -108,16 +111,16 @@ class _ClassroomState extends State<Classroom> {
               thickness: 2,
             ),
           ),
-          StreamBuilder<List<UserModel>>(
+          StreamBuilder<List<ClassmateModel>>(
               stream: _classmateStreamController.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  final List<UserModel> classmates = snapshot.data!;
+                  final List<ClassmateModel> classmates = snapshot.data!;
                   return Expanded(
                     child: ListView.builder(
                         itemCount: classmates.length,
                         itemBuilder: (context, index) {
-                          final UserModel classmate = classmates[index];
+                          final ClassmateModel classmate = classmates[index];
                           return Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: ListTile(

@@ -13,12 +13,16 @@ class ContainerCard extends StatefulWidget {
   const ContainerCard({
     super.key,
     required this.index,
+    required this.sectID,
     required this.section,
+    required this.estabID,
     required this.establishment,
     required this.refreshCallback,
   });
   final int index;
+  final String sectID;
   final String section;
+  final String estabID;
   final String establishment;
   final VoidCallback refreshCallback;
   @override
@@ -45,6 +49,10 @@ class _ContainerCardState extends State<ContainerCard> {
       widget.section,
       widget.establishment,
     ];
+    List<String> IDS = [
+      widget.sectID,
+      widget.estabID,
+    ];
     List<String> link = ['class', 'room'];
 
     return Container(
@@ -56,6 +64,11 @@ class _ContainerCardState extends State<ContainerCard> {
          
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => Section(
+                 ids : widget.sectID == "null"
+                        ? widget.estabID
+                        : widget.estabID == "null"
+                            ? widget.sectID
+                            : IDS[widget.index % IDS.length],
                     name: widget.section == "null"
                         ? widget.establishment
                         : widget.establishment == "null"

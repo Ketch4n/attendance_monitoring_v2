@@ -5,7 +5,8 @@ import 'section/class.dart';
 import 'section/dtr.dart';
 
 class Section extends StatefulWidget {
-  const Section({super.key, required this.name, required this.image});
+  const Section({super.key,required this.ids, required this.name, required this.image});
+  final String ids;
   final String name;
   final String image;
 
@@ -43,7 +44,7 @@ class _SectionState extends State<Section> {
         children: [
           dtr(image: widget.image, name: widget.name),
           const SectionTab(),
-          Classroom(name: widget.name),
+          Classroom(ids:widget.ids, name: widget.name),
         ],
       ),
     );

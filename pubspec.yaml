@@ -52,6 +52,8 @@ dependencies:
   flutter_platform_alert: ^0.3.0
   timeline_tile: ^2.0.0
   geolocator: ^10.1.0
+  shimmer: ^3.0.0
+  loader_skeleton: ^0.0.4
 
   
 

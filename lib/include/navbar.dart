@@ -104,20 +104,33 @@ class _NavbarState extends State<Navbar> {
                                   ),
                                 );
                               }
-                              return const Padding(
+                              return Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 15.0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Loading..."),
+                                    Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Username...",
+                                          style: Style.navbartxt), // Use null safety check
+                                      Text("loading...",
+                                          textScaleFactor:
+                                              ScaleSize.textScaleFactor(
+                                                  context),
+                                          style: const TextStyle(
+                                              color: Colors.white))
+                                    ],
+                                  ),
                                   ],
                                 ),
                               );
-                            })
+                            },)
                       ],
                     ),
-                  ]),
+                  ],),
                 ],
               ),
             ),

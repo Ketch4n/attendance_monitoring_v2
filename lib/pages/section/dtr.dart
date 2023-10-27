@@ -1,5 +1,6 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_skeleton/loader_skeleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../style/style.dart';
@@ -61,11 +62,12 @@ class _dtrState extends State<dtr> {
         Padding(
           padding: const EdgeInsets.all(10),
           child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
+            onTap: () async {
+             await Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: ((context) => Camera(name: widget.name))),
               );
+            _getImageReferences();
             },
             child: Container(
               height: 70,
@@ -102,9 +104,11 @@ class _dtrState extends State<dtr> {
           ),
         ),
         if (isLoading)
-          const Expanded(
-            child: Center(
-              child: CircularProgressIndicator(),
+           Expanded(
+            child: CardListSkeleton(
+              isCircularImage: true,
+              isBottomLinesActive: true,
+              length: 1,
             ),
           )
         else if (_imageReferences.isEmpty)
