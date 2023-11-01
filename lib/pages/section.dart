@@ -5,10 +5,10 @@ import 'section/class.dart';
 import 'section/dtr.dart';
 
 class Section extends StatefulWidget {
-  const Section({super.key,required this.ids, required this.name, required this.image});
+  const Section({super.key,required this.ids, required this.name});
   final String ids;
   final String name;
-  final String image;
+
 
   @override
   State<Section> createState() => _SectionState();
@@ -21,7 +21,7 @@ class _SectionState extends State<Section> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.name),
+        title: Text("Section"),
         centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -42,7 +42,7 @@ class _SectionState extends State<Section> {
       body: IndexedStack(
         index: current,
         children: [
-          dtr(image: widget.image, name: widget.name),
+          dtr(name: widget.name),
           const SectionTab(),
           Classroom(ids:widget.ids, name: widget.name),
         ],

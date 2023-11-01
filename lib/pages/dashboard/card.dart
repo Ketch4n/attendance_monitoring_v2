@@ -54,7 +54,7 @@ class _ContainerCardState extends State<ContainerCard> {
       widget.estabID,
     ];
     List<String> link = ['class', 'room'];
-
+  
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: Style.boxdecor
@@ -62,25 +62,25 @@ class _ContainerCardState extends State<ContainerCard> {
       child: InkWell(
         onTap: () {
          
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Section(
-                 ids : widget.sectID == "null"
-                        ? widget.estabID
-                        : widget.estabID == "null"
-                            ? widget.sectID
-                            : IDS[widget.index % IDS.length],
-                    name: widget.section == "null"
-                        ? widget.establishment
-                        : widget.establishment == "null"
-                            ? widget.section
-                            : subnamePaths[widget.index % subnamePaths.length],
-                    image: widget.section == "null"
-                        ? estabIMG
-                        : widget.establishment == "null"
-                            ? sectionIMG
-                            : imagePaths[widget.index % imagePaths.length],
-                  )))
-                  ;
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) => Section( 
+          //      ids  : widget.sectID == "null"
+          //               ? widget.estabID
+          //               : widget.estabID == "null"
+          //                   ? widget.sectID
+          //                   : IDS[widget.index % IDS.length],
+          //           name : widget.section == "null"
+          //               ? widget.establishment
+          //               : widget.establishment == "null"
+          //                   ? widget.section
+          //                   : subnamePaths[widget.index % subnamePaths.length],
+          //         image : widget.section == "null"
+          //               ? estabIMG
+          //               : widget.establishment == "null"
+          //                   ? sectionIMG
+          //                   : imagePaths[widget.index % imagePaths.length],
+          //         )));
+                  
         },
         child: Stack(
           children: <Widget>[

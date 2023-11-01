@@ -5,6 +5,8 @@ class ClassmateModel {
   final String student_id;
   final String section_id;
   final String admin_id;
+  final String admin_name;
+  final String admin_email;
 
   ClassmateModel(
       {required this.id,
@@ -13,6 +15,8 @@ class ClassmateModel {
       required this.student_id,
       required this.section_id,
       required this.admin_id,
+      required this.admin_name,
+      required this.admin_email,
       });
 
   Map<String, dynamic> toJson() => {
@@ -23,6 +27,8 @@ class ClassmateModel {
         'student_id': student_id,
         'section_id': section_id,
         'admin_id' : admin_id,
+        'admin_name' : admin_name,
+        'admin_email': admin_email
 
       };
 
@@ -34,5 +40,7 @@ class ClassmateModel {
       student_id: json['student_id'],
       section_id: json['section_id'],
       admin_id: json['admin_id'],
+      admin_name: json['admin_name'],
+      admin_email: json['admin_email']
       );
 }

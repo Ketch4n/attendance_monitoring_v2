@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:attendance_monitoring/api/server.dart';
+import 'package:attendance_monitoring/pages/dashboard/dash_card.dart';
 import 'package:attendance_monitoring/pages/dashboard/join.dart';
+import 'package:attendance_monitoring/pages/establishment.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_skeleton/loader_skeleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +28,10 @@ class _DashboardState extends State<Dashboard> {
       StreamController<UserModel>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+
+  List<dynamic>? classData;
+  List<dynamic>? roomData;
+
   Future<void> _refreshData() async {
     await fetchUser(_userStreamController);
   }
@@ -34,7 +40,22 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     fetchUser(_userStreamController);
-    // fetchData();
+    fetchData();
+  }
+
+Future<void> fetchData() async {
+    final response = await http.get( Uri.parse('${Server.host}pages/student/class_room.php'));
+  
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        classData = data['class_data'];
+        roomData = data['room_data'];
+      });
+    } else {
+      print('Failed to fetch data: ${response.reasonPhrase}');
+    }
   }
 
   @override
@@ -148,26 +169,21 @@ floatingActionButton:
       
                 Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: ListView.builder(
-                    
-                    itemCount: user.section_id != "null" &&
-                            user.establishment_id != "null"
-                        ? 2
-                        : 1,
-                    itemBuilder: (context, index) {
-                      final sectID = user.section_id;
-                      final section = user.section_name;
-                      final estabID = user.establishment_id;
-                      final establishment = user.establishment_name;
-                      return ContainerCard(
-                        index: index,
-                        sectID : sectID,
-                        section: section,
-                        estabID : estabID,
-                        establishment: establishment,
-                        refreshCallback: _refreshData,
-                      ); // Use the custom item here
-                    },
+                  child: ListView(
+                    children: [
+                     
+                      user.establishment_id != "null" ?
+                      DashCard(id: user.establishment_id,
+                      name: user.establishment_name,
+                      path: "room",
+                      refreshCallback:_refreshData): SizedBox(),
+                       user.section_id != "null" ?
+                      DashCard(id: user.section_id,
+                      name: user.section_name,
+                      path:"class",
+                      refreshCallback: _refreshData) : SizedBox(),
+                    ],
+                  
                   ),
                 ),
               );

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:attendance_monitoring/model/class_room_model.dart';
 import 'package:attendance_monitoring/model/classmate.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../api/server.dart';
 import '../../model/user_model.dart';
 import '../../style/style.dart';
@@ -20,12 +21,20 @@ class Classroom extends StatefulWidget {
 class _ClassroomState extends State<Classroom> {
   final StreamController<List<ClassmateModel>> _classmateStreamController =
       StreamController<List<ClassmateModel>>();
-
   // Future<void> _refreshData() async {
   //   await fetchUser(_userStreamController);
   // }
+String yourID = "";
+String admin_ID = "";
+String admin_name = "";
+String admin_email = "";
 
   Future<void> fetchClassmates(classmateStreamController) async {
+     final prefs = await SharedPreferences.getInstance();
+  final userId = prefs.getString('userId');
+  setState(() {
+    yourID = userId!;
+  });
     final response = await http.post(
       Uri.parse('${Server.host}pages/student/classmate.php'),
       body: {'section_id': widget.ids},
@@ -36,6 +45,11 @@ class _ClassroomState extends State<Classroom> {
       final List<ClassmateModel> classmates = data
           .map((classmateData) => ClassmateModel.fromJson(classmateData))
           .toList();
+setState(() {
+  admin_ID = classmates[0].admin_id;
+  admin_name = classmates[0].admin_name;
+  admin_email = classmates[0].admin_email;
+});
 
       // Add the list of classmates to the stream
       classmateStreamController.add(classmates);
@@ -48,16 +62,19 @@ class _ClassroomState extends State<Classroom> {
   void initState() {
     super.initState();
     fetchClassmates(_classmateStreamController);
+   
   }
 
   @override
   void dispose() {
     super.dispose();
     _classmateStreamController.close();
+   
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -87,16 +104,19 @@ class _ClassroomState extends State<Classroom> {
                 const SizedBox(
                   width: 10,
                 ),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("admin", style: TextStyle(fontSize: 18)),
-                    Text(
-                      "admin@gmail.com",
-                      style: TextStyle(fontSize: 12),
-                    )
-                  ],
-                )
+             
+                 
+                 Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(admin_name, style: TextStyle(fontSize: 18)),
+                        Text(
+                         admin_email,
+                          style: TextStyle(fontSize: 12),
+                        )
+                      ],
+                    ),
+                 
               ],
             ),
           ),
@@ -141,7 +161,7 @@ class _ClassroomState extends State<Classroom> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(classmate.name,
+                                      Text(classmate.student_id == yourID ? classmate.name +" (You)" : classmate.name,
                                           style: const TextStyle(fontSize: 18)),
                                       Text(
                                         classmate.email,

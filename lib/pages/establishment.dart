@@ -1,50 +1,88 @@
 
-import 'package:attendance_monitoring/pages/Establishment/dtr.dart';
+import 'package:attendance_monitoring/pages/establishment/estab_dtr.dart';
+import 'package:attendance_monitoring/pages/establishment/estab_location.dart';
 import 'package:attendance_monitoring/pages/establishment/estab_room.dart';
-import 'package:attendance_monitoring/pages/establishment/establishment_tab.dart';
+import 'package:attendance_monitoring/pages/establishment/estab_onsite.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 class Establishment extends StatefulWidget {
-  const Establishment({super.key, required this.name, required this.image});
+  const Establishment({super.key,
+  required this.id,
+  required this.name, 
+  });
+  final String id;
   final String name;
-  final String image;
+ 
 
   @override
   State<Establishment> createState() => _EstablishmentState();
 }
 
 class _EstablishmentState extends State<Establishment> {
-  int current = 0;
+  // int current = 0;
+int _selectedIndex = 0;
+ 
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.name),
+        title: Text("Establishment"),
         centerTitle: true,
       ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   backgroundColor: Colors.grey[200],
+      //   items: const [
+      //       // Hero(tag: icon, child: FaIcon(icon.iconData))
+      //     BottomNavigationBarItem(
+      //         icon: FaIcon(FontAwesomeIcons.locationDot), label: 'Location'),
+      //           BottomNavigationBarItem(
+      //         icon: FaIcon(FontAwesomeIcons.calendar), label: 'DTR'),
+      //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.building), label: 'On-site'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.people), label: 'People'),
+      //   ],
+      //   currentIndex: current,
+      //   onTap: (int index) {
+      //     setState(() {
+      //       current = index;
+      //     });
+      //   },
+      // ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey[200],
-        items: const [
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
+         BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.locationDot),
+              label: 'GPS'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: 'DTR'),
-          BottomNavigationBarItem(icon: Icon(Icons.class_), label: 'Establishment'),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'People'),
+              icon: FaIcon(FontAwesomeIcons.calendar),
+              label: 'DTR'),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.building),
+              label: 'On-site'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.people),
+              label: 'People'),
+        
         ],
-        currentIndex: current,
-        onTap: (int index) {
-          setState(() {
-            current = index;
-          });
-        },
       ),
       body: IndexedStack(
-        index: current,
+        index: _selectedIndex,
         children: [
-          dtr_estab(image: widget.image, name: widget.name),
-          const EstablishmentTab(),
-          EstabRoom(name: widget.name),
+          EstabLocation(name: widget.name),
+          EstabDTR(),
+          const EstabOnsite(),
+          EstabRoom(ids: widget.id ,name: widget.name),
         ],
       ),
     );

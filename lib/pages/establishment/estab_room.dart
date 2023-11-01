@@ -1,41 +1,58 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:attendance_monitoring/model/class_room_model.dart';
+import 'package:attendance_monitoring/model/roomate.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../api/server.dart';
 import '../../model/user_model.dart';
 import '../../style/style.dart';
 import 'package:http/http.dart' as http;
 
 class EstabRoom extends StatefulWidget {
-  const EstabRoom({super.key, required this.name});
+  const EstabRoom({super.key, required this.ids, required this.name});
+  final String ids;
   final String name;
   @override
   State<EstabRoom> createState() => _EstabRoomState();
 }
 
 class _EstabRoomState extends State<EstabRoom> {
-  final StreamController<List<UserModel>> _classmateStreamController =
-      StreamController<List<UserModel>>();
+  final StreamController<List<RoomateModel>> _roomateStreamController =
+      StreamController<List<RoomateModel>>();
 
   // Future<void> _refreshData() async {
   //   await fetchUser(_userStreamController);
   // }
-
-  Future<void> fetchClassmates(classmateStreamController) async {
+String yourID = "";
+String creator_ID = "";
+String creator_name = "";
+String creator_email = "";
+  Future<void> fetchroomates(roomateStreamController) async {
+     final prefs = await SharedPreferences.getInstance();
+  final userId = prefs.getString('userId');
+  setState(() {
+    yourID = userId!;
+  });
     final response = await http.post(
-      Uri.parse('${Server.host}pages/student/classmate.php'),
-      body: {'name': widget.name},
+      Uri.parse('${Server.host}pages/student/roomate.php'),
+      body: {'establishment_id': widget.ids},
     );
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      final List<UserModel> classmates = data
-          .map((classmateData) => UserModel.fromJson(classmateData))
+      final List<RoomateModel> roomates = data
+          .map((roomateData) => RoomateModel.fromJson(roomateData))
           .toList();
+setState(() {
+  creator_ID = roomates[0].creator_id;
+  creator_name = roomates[0].creator_name;
+  creator_email = roomates[0].creator_email;
+});
 
-      // Add the list of classmates to the stream
-      classmateStreamController.add(classmates);
+      // Add the list of roomates to the stream
+      roomateStreamController.add(roomates);
     } else {
       throw Exception('Failed to load data');
     }
@@ -44,13 +61,13 @@ class _EstabRoomState extends State<EstabRoom> {
   @override
   void initState() {
     super.initState();
-    fetchClassmates(_classmateStreamController);
+    fetchroomates(_roomateStreamController);
   }
 
   @override
   void dispose() {
     super.dispose();
-    _classmateStreamController.close();
+    _roomateStreamController.close();
   }
 
   @override
@@ -84,12 +101,12 @@ class _EstabRoomState extends State<EstabRoom> {
                 const SizedBox(
                   width: 10,
                 ),
-                const Column(
+               Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("admin", style: TextStyle(fontSize: 18)),
+                    Text(creator_name, style: TextStyle(fontSize: 18)),
                     Text(
-                      "admin@gmail.com",
+                      creator_email,
                       style: TextStyle(fontSize: 12),
                     )
                   ],
@@ -99,7 +116,7 @@ class _EstabRoomState extends State<EstabRoom> {
           ),
           const ListTile(
             title: Text(
-              "Classmates",
+              "Interns",
               style: TextStyle(
                   color: Colors.blue, fontSize: 20, fontFamily: "NexaBold"),
             ),
@@ -108,16 +125,16 @@ class _EstabRoomState extends State<EstabRoom> {
               thickness: 2,
             ),
           ),
-          StreamBuilder<List<UserModel>>(
-              stream: _classmateStreamController.stream,
+          StreamBuilder<List<RoomateModel>>(
+              stream: _roomateStreamController.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  final List<UserModel> classmates = snapshot.data!;
+                  final List<RoomateModel> roomates = snapshot.data!;
                   return Expanded(
                     child: ListView.builder(
-                        itemCount: classmates.length,
+                        itemCount: roomates.length,
                         itemBuilder: (context, index) {
-                          final UserModel classmate = classmates[index];
+                          final RoomateModel roomate = roomates[index];
                           return Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: ListTile(
@@ -138,10 +155,11 @@ class _EstabRoomState extends State<EstabRoom> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(classmate.name,
+                                    Text(roomate.student_id == yourID ? 
+                                    roomate.name +" (You)" : roomate.name,
                                           style: const TextStyle(fontSize: 18)),
                                       Text(
-                                        classmate.email,
+                                        roomate.email,
                                         style: const TextStyle(fontSize: 12),
                                       )
                                     ],
@@ -154,7 +172,7 @@ class _EstabRoomState extends State<EstabRoom> {
                   );
                 } else if (!snapshot.hasData) {
                   return const Center(
-                    child: Text("No classmates found"),
+                    child: Text("No roomates found"),
                   );
                 } else {
                   return const Center(child: CircularProgressIndicator());

@@ -8,8 +8,7 @@ import '../../widgets/camera.dart';
 import 'dtr/metadata.dart';
 
 class dtr extends StatefulWidget {
-  const dtr({super.key, required this.image, required this.name});
-  final String image;
+  const dtr({super.key, required this.name});
   final String name;
   @override
   State<dtr> createState() => _dtrState();
@@ -51,13 +50,52 @@ class _dtrState extends State<dtr> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 100,
-          width: double.maxFinite,
-          child: Image.asset(
-            widget.image,
-            fit: BoxFit.cover,
-          ),
+        Stack(
+          children: <Widget>[
+            SizedBox(
+              height: 80,
+              width: double.maxFinite,
+              child: Image.asset(
+               "assets/images/blue.jpg",
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+             
+              child: Column(
+                children: [
+                  SizedBox(height: 30,),
+                  Row(
+                    children: [
+                       SizedBox(width: 20,),
+                      ClipRRect(
+                                    borderRadius: Style.borderRadius,
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Image.asset(
+                                          'assets/nmsct.jpg',
+                                          height: 80,
+                                          width: 80,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 5,),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom:15.0),
+                                    child: Text(widget.name,style: TextStyle(
+                                      color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold
+                                    ),),
+                                  )
+                    ],
+                  ),
+                
+                ],
+              ),
+            )
+          ],
         ),
         Padding(
           padding: const EdgeInsets.all(10),
@@ -104,13 +142,18 @@ class _dtrState extends State<dtr> {
           ),
         ),
         if (isLoading)
-           Expanded(
-            child: CardListSkeleton(
-              isCircularImage: true,
-              isBottomLinesActive: true,
-              length: 1,
+        const Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
           )
+          //  Expanded(
+          //   child: CardListSkeleton(
+          //     isCircularImage: true,
+          //     isBottomLinesActive: true,
+          //     length: 1,
+          //   ),
+          // )
         else if (_imageReferences.isEmpty)
           const Expanded(
             child: Center(

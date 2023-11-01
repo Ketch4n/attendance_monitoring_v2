@@ -44,6 +44,7 @@ Future<void> login(
           final userId = data['id'];
           final prefs = await SharedPreferences.getInstance();
           prefs.setString('userId', userId);
+          print("ID : $userId");
 
           const title = "Login success";
           String content = "Welcome $message";
