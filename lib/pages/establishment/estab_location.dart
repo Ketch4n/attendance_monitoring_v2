@@ -23,8 +23,9 @@ class EstabLocation extends StatefulWidget {
 }
 
 class _EstabLocationState extends State<EstabLocation> {
-  // final StreamController<TodayModel> _todayStream =
-  //     StreamController<TodayModel>();
+  final StreamController<TodayModel> _todayStream =
+      StreamController<TodayModel>();
+
   bool isLoading = true; // Track if data is loading
   int userId = 0;
   double screenHeight = 0;
@@ -32,9 +33,13 @@ class _EstabLocationState extends State<EstabLocation> {
   final _idController = TextEditingController();
 
   String checkInAM = "00:00:00";
+  String inAM = "--";
   String checkOutAM = "00:00:00";
+  String outAM = "--";
   String checkInPM = "00:00:00";
+  String inPM = "--";
   String checkOutPM = "00:00:00";
+  String outPM = "--";
   String defaultValue = '00:00:00';
   String defaultT = '--/--';
 
@@ -87,7 +92,7 @@ class _EstabLocationState extends State<EstabLocation> {
   //    });
 
   // }
-  Future today() async {
+  Future today(todayStream) async {
     final prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userId');
     final response = await http.post(
@@ -105,9 +110,13 @@ class _EstabLocationState extends State<EstabLocation> {
 
       setState(() {
         checkInAM = today.time_in_am;
+        inAM = today.in_am;
         checkOutAM = today.time_out_am;
+        outAM = today.out_am;
         checkInPM = today.time_in_pm;
+        inPM = today.in_pm;
         checkOutPM = today.time_out_pm;
+        outPM = today.out_pm;
       });
       // todayStream.add(today);
     } else {
@@ -116,14 +125,14 @@ class _EstabLocationState extends State<EstabLocation> {
   }
 
   // String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
-  Future<void> insertToday(String id, String inAM) async {
+  Future<void> insertToday(String id) async {
     final prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userId');
     String defaultDATE = DateFormat('yyyy-MM-dd').format(DateTime.now());
     String apiUrl = '${Server.host}pages/student/establishment.php';
     Map<String, String> headers = {'Content-Type': 'application/json'};
     String jsonData =
-        '{"student_id": "$userId", "estab_id": "2","time_in_am":"$checkInAM", "time_out_am":"$checkOutAM","time_in_pm":"$checkInPM","time_out_pm":"$checkOutPM","date":"$defaultDATE"}';
+        '{"student_id": "$userId", "estab_id": "2","time_in_am":"$checkInAM","in_am":"$inAM", "time_out_am":"$checkOutAM","out_am":"$outAM","time_in_pm":"$checkInPM","in_pm":"$inPM","time_out_pm":"$checkOutPM","out_pm":"$outPM","date":"$defaultDATE"}';
     final response =
         await http.post(Uri.parse(apiUrl), headers: headers, body: jsonData);
     print(defaultDATE);
@@ -133,14 +142,13 @@ class _EstabLocationState extends State<EstabLocation> {
   void initState() {
     super.initState();
     // sharedPref();
-    today();
+    today(_todayStream);
   }
 
   @override
   void dispose() {
     super.dispose();
-    // _todayStream.close();
-    // today();
+    _todayStream.close();
   }
 
   @override
@@ -258,8 +266,9 @@ class _EstabLocationState extends State<EstabLocation> {
                       Text(
                         checkInAM == defaultValue
                             ? defaultT
-                            : DateFormat('hh:mm a').format(
-                                DateFormat('HH:mm:ss').parse(checkInAM)),
+                            : DateFormat('hh:mm ').format(
+                                    DateFormat('HH:mm:ss').parse(checkInAM)) +
+                                inAM,
                         style: TextStyle(
                           fontFamily: "NexaBold",
                           fontSize: screenWidth / 18,
@@ -277,8 +286,9 @@ class _EstabLocationState extends State<EstabLocation> {
                       Text(
                         checkInPM == defaultValue
                             ? defaultT
-                            : DateFormat('hh:mm a').format(
-                                DateFormat('HH:mm:ss').parse(checkInPM)),
+                            : DateFormat('hh:mm ').format(
+                                    DateFormat('HH:mm:ss').parse(checkInPM)) +
+                                inPM,
                         style: TextStyle(
                           fontFamily: "NexaBold",
                           fontSize: screenWidth / 18,
@@ -303,8 +313,9 @@ class _EstabLocationState extends State<EstabLocation> {
                       Text(
                         checkOutAM == defaultValue
                             ? defaultT
-                            : DateFormat('hh:mm a').format(
-                                DateFormat('HH:mm:ss').parse(checkOutAM)),
+                            : DateFormat('hh:mm ').format(
+                                    DateFormat('HH:mm:ss').parse(checkOutAM)) +
+                                outAM,
                         style: TextStyle(
                           fontFamily: "NexaBold",
                           fontSize: screenWidth / 18,
@@ -322,8 +333,9 @@ class _EstabLocationState extends State<EstabLocation> {
                       Text(
                         checkOutPM == defaultValue
                             ? defaultT
-                            : DateFormat('hh:mm a').format(
-                                DateFormat('HH:mm:ss').parse(checkOutPM)),
+                            : DateFormat('hh:mm ').format(
+                                    DateFormat('HH:mm:ss').parse(checkOutPM)) +
+                                outPM,
                         style: TextStyle(
                           fontFamily: "NexaBold",
                           fontSize: screenWidth / 18,
@@ -376,8 +388,10 @@ class _EstabLocationState extends State<EstabLocation> {
                                 ? setState(() async {
                                     checkInAM = DateFormat('hh:mm a')
                                         .format(DateTime.now());
-                                    await insertToday(widget.id, checkInAM);
-                                    today();
+                                    inAM =
+                                        DateFormat('a').format(DateTime.now());
+                                    await insertToday(widget.id);
+                                    today(_todayStream);
                                     key.currentState!.reset();
                                     // prefs.setString('timeINAM', checkInAM);
                                   })
@@ -385,9 +399,10 @@ class _EstabLocationState extends State<EstabLocation> {
                                     ? setState(() async {
                                         checkOutAM = DateFormat('hh:mm a')
                                             .format(DateTime.now());
-                                        await insertToday(
-                                            widget.id, checkOutAM);
-                                        today();
+                                        outAM = DateFormat('a')
+                                            .format(DateTime.now());
+                                        await insertToday(widget.id);
+                                        today(_todayStream);
                                         key.currentState!.reset();
                                         //  prefs.setString('timeOUTAM', checkOutAM);
                                       })
@@ -395,18 +410,20 @@ class _EstabLocationState extends State<EstabLocation> {
                                         ? setState(() async {
                                             checkInPM = DateFormat('hh:mm a')
                                                 .format(DateTime.now());
-                                            await insertToday(
-                                                widget.id, checkInPM);
-                                            today();
+                                            inPM = DateFormat('a')
+                                                .format(DateTime.now());
+                                            await insertToday(widget.id);
+                                            today(_todayStream);
                                             key.currentState!.reset();
                                             //  prefs.setString('timeINPM', checkInPM);
                                           })
                                         : setState(() async {
                                             checkOutPM = DateFormat('hh:mm a')
                                                 .format(DateTime.now());
-                                            await insertToday(
-                                                widget.id, checkOutPM);
-                                            today();
+                                            outPM = DateFormat('a')
+                                                .format(DateTime.now());
+                                            await insertToday(widget.id);
+                                            today(_todayStream);
                                             key.currentState!.reset();
                                             //  prefs.setString('timeOUTPM', checkOutPM);
                                           });
