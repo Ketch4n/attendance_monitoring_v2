@@ -1,6 +1,5 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:loader_skeleton/loader_skeleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../style/style.dart';
@@ -64,10 +63,10 @@ class _dtrState extends State<dtr> {
              
               child: Column(
                 children: [
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
                   Row(
                     children: [
-                       SizedBox(width: 20,),
+                       const SizedBox(width: 20,),
                       ClipRRect(
                                     borderRadius: Style.borderRadius,
                                     child: Container(
@@ -82,10 +81,10 @@ class _dtrState extends State<dtr> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 5,),
+                                  const SizedBox(width: 5,),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom:15.0),
-                                    child: Text(widget.name,style: TextStyle(
+                                    child: Text(widget.name,style: const TextStyle(
                                       color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold
                                     ),),
                                   )

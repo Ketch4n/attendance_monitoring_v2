@@ -184,18 +184,15 @@ class _SignupState extends State<Signup> {
                           labelText: _roleController.text == 'Establishment'
                               ? 'Room number'
                               : 'ID',
-                          suffixIcon: 
-                          // _roleController.text == 'Establishment'
-                          //     ? 
-                          //     IconButton(
-                          //         icon: const Icon(Icons.location_pin),
-                          //         onPressed: () {
-                          //           getCurrentPosition();
-                          //           // _idController.text = id;
-                          //         },
-                          //       )
-                          //     : 
-                              IconButton(
+                          suffixIcon: _roleController.text == 'Establishment'
+                              ? IconButton(
+                                  icon: const Icon(Icons.location_pin),
+                                  onPressed: () {
+                                    getCurrentPosition();
+                                    // _idController.text = id;
+                                  },
+                                )
+                              : IconButton(
                                   icon: const Icon(Icons.refresh),
                                   onPressed: () {
                                     String id = generateId();

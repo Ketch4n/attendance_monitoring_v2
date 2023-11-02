@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:attendance_monitoring/model/class_room_model.dart';
 import 'package:attendance_monitoring/model/roomate.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../api/server.dart';
-import '../../model/user_model.dart';
 import '../../style/style.dart';
 import 'package:http/http.dart' as http;
 
@@ -104,10 +102,10 @@ setState(() {
                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(creator_name, style: TextStyle(fontSize: 18)),
+                    Text(creator_name, style: const TextStyle(fontSize: 18)),
                     Text(
                       creator_email,
-                      style: TextStyle(fontSize: 12),
+                      style: const TextStyle(fontSize: 12),
                     )
                   ],
                 )
@@ -156,7 +154,7 @@ setState(() {
                                         CrossAxisAlignment.start,
                                     children: [
                                     Text(roomate.student_id == yourID ? 
-                                    roomate.name +" (You)" : roomate.name,
+                                    "${roomate.name} (You)" : roomate.name,
                                           style: const TextStyle(fontSize: 18)),
                                       Text(
                                         roomate.email,

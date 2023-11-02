@@ -4,14 +4,11 @@ import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:attendance_monitoring/api/server.dart';
 import 'package:attendance_monitoring/pages/dashboard/dash_card.dart';
 import 'package:attendance_monitoring/pages/dashboard/join.dart';
-import 'package:attendance_monitoring/pages/establishment.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_skeleton/loader_skeleton.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../api/user.dart';
 import '../model/user_model.dart';
 import '../style/style.dart';
-import 'dashboard/card.dart';
 import 'package:http/http.dart' as http;
 
 class Dashboard extends StatefulWidget {
@@ -176,12 +173,12 @@ floatingActionButton:
                       DashCard(id: user.establishment_id,
                       name: user.establishment_name,
                       path: "room",
-                      refreshCallback:_refreshData): SizedBox(),
+                      refreshCallback:_refreshData): const SizedBox(),
                        user.section_id != "null" ?
                       DashCard(id: user.section_id,
                       name: user.section_name,
                       path:"class",
-                      refreshCallback: _refreshData) : SizedBox(),
+                      refreshCallback: _refreshData) : const SizedBox(),
                     ],
                   
                   ),

@@ -21,7 +21,7 @@ class _SectionState extends State<Section> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Section"),
+        title: const Text("Section"),
         centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(

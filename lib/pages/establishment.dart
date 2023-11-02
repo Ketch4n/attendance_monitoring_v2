@@ -1,4 +1,3 @@
-
 import 'package:attendance_monitoring/pages/establishment/estab_dtr.dart';
 import 'package:attendance_monitoring/pages/establishment/estab_location.dart';
 import 'package:attendance_monitoring/pages/establishment/estab_room.dart';
@@ -6,15 +5,14 @@ import 'package:attendance_monitoring/pages/establishment/estab_onsite.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class Establishment extends StatefulWidget {
-  const Establishment({super.key,
-  required this.id,
-  required this.name, 
+  const Establishment({
+    super.key,
+    required this.id,
+    required this.name,
   });
   final String id;
   final String name;
- 
 
   @override
   State<Establishment> createState() => _EstablishmentState();
@@ -22,19 +20,19 @@ class Establishment extends StatefulWidget {
 
 class _EstablishmentState extends State<Establishment> {
   // int current = 0;
-int _selectedIndex = 0;
- 
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Establishment"),
+        title: const Text("Establishment"),
         centerTitle: true,
       ),
       // bottomNavigationBar: BottomNavigationBar(
@@ -61,28 +59,22 @@ int _selectedIndex = 0;
         selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
-         BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.locationDot),
-              label: 'GPS'),
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.calendar),
-              label: 'DTR'),
+              icon: FaIcon(FontAwesomeIcons.locationDot), label: 'GPS'),
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.building),
-              label: 'On-site'),
+              icon: FaIcon(FontAwesomeIcons.calendar), label: 'DTR'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.people),
-              label: 'People'),
-        
+              icon: FaIcon(FontAwesomeIcons.building), label: 'On-site'),
+          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'People'),
         ],
       ),
       body: IndexedStack(
         index: _selectedIndex,
         children: [
-          EstabLocation(name: widget.name),
-          EstabDTR(),
+          EstabLocation(id: widget.id, name: widget.name),
+          const EstabDTR(),
           const EstabOnsite(),
-          EstabRoom(ids: widget.id ,name: widget.name),
+          EstabRoom(ids: widget.id, name: widget.name),
         ],
       ),
     );

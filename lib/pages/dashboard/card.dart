@@ -3,11 +3,9 @@
 
 import 'package:attendance_monitoring/api/leave.dart';
 
-import 'package:attendance_monitoring/pages/establishment.dart';
 import 'package:flutter/material.dart';
 
 import '../../style/style.dart';
-import '../section.dart';
 
 class ContainerCard extends StatefulWidget {
   const ContainerCard({
@@ -107,7 +105,7 @@ class _ContainerCardState extends State<ContainerCard> {
                     ? estabNAME
                     : widget.establishment == "null"
                         ? sectionNAME
-                        : namePaths[widget.index % namePaths.length],style: TextStyle(color: Colors.white),),
+                        : namePaths[widget.index % namePaths.length],style: const TextStyle(color: Colors.white),),
                 // subtitle: Text("Supervisor"),
               )
             ]),

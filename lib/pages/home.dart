@@ -1,16 +1,13 @@
 // ignore_for_file: sort_child_properties_last
 
 import 'dart:async';
-import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import '../api/user.dart';
-import '../auth/logout.dart';
 import '../include/navbar.dart';
 import '../model/user_model.dart';
 import '../widgets/snackbar.dart';
 import 'dashboard.dart';
-import 'dashboard/join.dart';
 import 'profile.dart';
 
 class Home extends StatefulWidget {

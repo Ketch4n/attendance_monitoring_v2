@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:attendance_monitoring/model/class_room_model.dart';
 import 'package:attendance_monitoring/model/classmate.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../api/server.dart';
-import '../../model/user_model.dart';
 import '../../style/style.dart';
 import 'package:http/http.dart' as http;
 
@@ -109,10 +107,10 @@ setState(() {
                  Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(admin_name, style: TextStyle(fontSize: 18)),
+                        Text(admin_name, style: const TextStyle(fontSize: 18)),
                         Text(
                          admin_email,
-                          style: TextStyle(fontSize: 12),
+                          style: const TextStyle(fontSize: 12),
                         )
                       ],
                     ),
@@ -161,7 +159,7 @@ setState(() {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(classmate.student_id == yourID ? classmate.name +" (You)" : classmate.name,
+                                      Text(classmate.student_id == yourID ? "${classmate.name} (You)" : classmate.name,
                                           style: const TextStyle(fontSize: 18)),
                                       Text(
                                         classmate.email,

@@ -65,7 +65,7 @@ class _DashCardState extends State<DashCard> {
                     
                   ),
                   subtitle: Text(widget.path == 'class' ? "Section" : "OJT Establishment",
-                  style: TextStyle(color: Colors.white),),
+                  style: const TextStyle(color: Colors.white),),
                   // subtitle: Text("Supervisor"),
                 ),
                
