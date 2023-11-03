@@ -351,10 +351,10 @@ class _EstabLocationState extends State<EstabLocation> {
         const SizedBox(
           height: 20,
         ),
-        checkInAM == "00:00:00" ||
-                checkOutAM == "00:00:00" ||
-                checkInPM == "00:00:00" ||
-                checkOutPM == "00:00:00"
+        checkInAM == defaultValue ||
+                checkOutAM == defaultValue ||
+                checkInPM == defaultValue ||
+                checkOutPM == defaultValue
             ? Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
@@ -366,20 +366,26 @@ class _EstabLocationState extends State<EstabLocation> {
                     builder: (context) {
                       final GlobalKey<SlideActionState> key = GlobalKey();
                       return SlideAction(
-                          text: checkInAM == "00:00:00"
+                          text: checkInAM == defaultValue
                               ? "Slide to Time In"
-                              : checkOutAM == "00:00:00"
-                                  ? "Slide to Check Out"
-                                  : checkInPM == "00:00:00"
+                              : checkOutAM == defaultValue
+                                  ? "Slide to Time Out"
+                                  : checkInPM == defaultValue
                                       ? "Slide to Time In"
-                                      : "Slide to Check Out",
+                                      : "Slide to Time Out",
                           textStyle: TextStyle(
                             color: Colors.black54,
                             fontSize: screenWidth / 20,
                             fontFamily: "NexaRegular",
                           ),
                           outerColor: Colors.white,
-                          innerColor: Colors.blue,
+                          innerColor: checkInAM == defaultValue
+                              ? Colors.green
+                              : checkOutAM == defaultValue
+                                  ? Colors.orange
+                                  : checkInPM == defaultValue
+                                      ? Colors.green
+                                      : Colors.orange,
                           key: key,
                           onSubmit: () async {
                             final prefs = await SharedPreferences.getInstance();

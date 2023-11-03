@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 
 import 'auth/auth.dart';
 
@@ -34,6 +35,9 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
       ),
       home: const Auth(),
+       localizationsDelegates: const [
+        MonthYearPickerLocalizations.delegate,
+      ],
     );
   }
 }
