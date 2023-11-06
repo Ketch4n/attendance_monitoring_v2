@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:attendance_monitoring/api/server.dart';
 import 'package:attendance_monitoring/model/today_model.dart';
+import 'package:attendance_monitoring/widgets/dtr_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,7 @@ class EstabLocation extends StatefulWidget {
   });
   final String id;
   final String name;
+
   @override
   State<EstabLocation> createState() => _EstabLocationState();
 }
@@ -44,39 +46,7 @@ class _EstabLocationState extends State<EstabLocation> {
   String defaultT = '--/--';
 
   DateFormat format = DateFormat("hh:mm a");
-  Future showModalSheet(BuildContext context) async {
-    return showModalBottomSheet(
-        context: context,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
-        barrierColor: Colors.black87.withOpacity(0.5),
-        isScrollControlled: true,
-        builder: (context) => DraggableScrollableSheet(
-              expand: false,
-              initialChildSize: 0.5,
-              maxChildSize: 0.7,
-              minChildSize: 0.32,
-              builder: (context, scrollController) => SingleChildScrollView(
-                controller: scrollController,
-                child: const SizedBox(
-                  height: 200,
-                  child: Center(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: 50,
-                          child: Divider(
-                            color: Colors.black26,
-                            thickness: 4,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ));
-  }
+
   // Future sharedPref() async {
   //    final prefs = await SharedPreferences.getInstance();
   //    final timeINAM = prefs.getString('timeINAM');
@@ -396,9 +366,7 @@ class _EstabLocationState extends State<EstabLocation> {
                                         .format(DateTime.now());
                                     inAM =
                                         DateFormat('a').format(DateTime.now());
-                                    await insertToday(widget.id);
-                                    today(_todayStream);
-                                    key.currentState!.reset();
+
                                     // prefs.setString('timeINAM', checkInAM);
                                   })
                                 : checkOutAM == "00:00:00"
@@ -407,9 +375,7 @@ class _EstabLocationState extends State<EstabLocation> {
                                             .format(DateTime.now());
                                         outAM = DateFormat('a')
                                             .format(DateTime.now());
-                                        await insertToday(widget.id);
-                                        today(_todayStream);
-                                        key.currentState!.reset();
+
                                         //  prefs.setString('timeOUTAM', checkOutAM);
                                       })
                                     : checkInPM == "00:00:00"
@@ -418,9 +384,7 @@ class _EstabLocationState extends State<EstabLocation> {
                                                 .format(DateTime.now());
                                             inPM = DateFormat('a')
                                                 .format(DateTime.now());
-                                            await insertToday(widget.id);
-                                            today(_todayStream);
-                                            key.currentState!.reset();
+
                                             //  prefs.setString('timeINPM', checkInPM);
                                           })
                                         : setState(() async {
@@ -428,16 +392,12 @@ class _EstabLocationState extends State<EstabLocation> {
                                                 .format(DateTime.now());
                                             outPM = DateFormat('a')
                                                 .format(DateTime.now());
-                                            await insertToday(widget.id);
-                                            today(_todayStream);
-                                            key.currentState!.reset();
+
                                             //  prefs.setString('timeOUTPM', checkOutPM);
                                           });
-                            // today();
-                            // Future.delayed(const Duration(milliseconds: 500),
-                            //     () {
-                            //   key.currentState!.reset();
-                            // });
+                            await insertToday(widget.id);
+                            setState(() {});
+                            key.currentState!.reset();
                           });
                     },
                   ),

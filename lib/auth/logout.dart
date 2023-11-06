@@ -34,6 +34,7 @@ logout(BuildContext context, purpose) {
             onPressed: () async {
               final prefs = await SharedPreferences.getInstance();
               prefs.remove('userId');
+              prefs.remove('userRole');
               print("ID REMOVED");
               if (purpose == 'Exit') {
                 Navigator.of(context).pop(true);

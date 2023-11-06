@@ -35,24 +35,6 @@ class _SignupState extends State<Signup> {
   final _nameController = TextEditingController();
   final inputController = StreamController<String>();
   final _roleController = TextEditingController();
-  void getCurrentPosition() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      print("Permission Not given");
-      LocationPermission asked = await Geolocator.requestPermission();
-    } else {
-      Position currentPosition = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.best);
-      print("Latitude : ${currentPosition.latitude}");
-      print("Longitude : ${currentPosition.longitude}");
-      String lat = currentPosition.latitude.toString();
-      String long = currentPosition.longitude.toString();
-      setState(() {
-        _idController.text = lat + long;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,24 +163,14 @@ class _SignupState extends State<Signup> {
                       TextFormField(
                         controller: _idController,
                         decoration: Style.textdesign.copyWith(
-                          labelText: _roleController.text == 'Establishment'
-                              ? 'Room number'
-                              : 'ID',
-                          suffixIcon: _roleController.text == 'Establishment'
-                              ? IconButton(
-                                  icon: const Icon(Icons.location_pin),
-                                  onPressed: () {
-                                    getCurrentPosition();
-                                    // _idController.text = id;
-                                  },
-                                )
-                              : IconButton(
-                                  icon: const Icon(Icons.refresh),
-                                  onPressed: () {
-                                    String id = generateId();
-                                    _idController.text = id;
-                                  },
-                                ),
+                          labelText: 'ID',
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.refresh),
+                            onPressed: () {
+                              String id = generateId();
+                              _idController.text = id;
+                            },
+                          ),
                         ),
                       ),
                     ],

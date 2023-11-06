@@ -1,3 +1,5 @@
+import 'package:attendance_monitoring/pages/admin/home.dart';
+import 'package:attendance_monitoring/pages/estab/home.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +15,7 @@ class Auth extends StatefulWidget {
 
 class _AuthState extends State<Auth> {
   bool showLoginScreen = true;
+  String role = "";
 
   @override
   void initState() {
@@ -24,17 +27,25 @@ class _AuthState extends State<Auth> {
   Future<void> checkUserSession() async {
     final prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userId');
+    final userRole = prefs.getString('userRole');
 
     // If user session exists, navigate to Home; otherwise, show Login
     setState(() {
       showLoginScreen = userId == null;
+      role = userRole!;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: showLoginScreen ? const Login() : const Home(),
+      body: showLoginScreen
+          ? const Login()
+          : role == 'Student'
+              ? const Home()
+              : role == 'Admin'
+                  ? AdminHome()
+                  : EstabHome(),
     );
   }
 }

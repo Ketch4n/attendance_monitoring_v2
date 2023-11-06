@@ -28,6 +28,10 @@ class _EstablishmentState extends State<Establishment> {
     });
   }
 
+  Future<void> _refreshData() async {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +67,8 @@ class _EstablishmentState extends State<Establishment> {
               icon: FaIcon(FontAwesomeIcons.locationDot), label: 'GPS'),
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.calendar), label: 'DTR'),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.building), label: 'On-site'),
+          // BottomNavigationBarItem(
+          //     icon: FaIcon(FontAwesomeIcons.building), label: 'On-site'),
           BottomNavigationBarItem(icon: Icon(Icons.people), label: 'People'),
         ],
       ),
@@ -72,8 +76,8 @@ class _EstablishmentState extends State<Establishment> {
         index: _selectedIndex,
         children: [
           EstabLocation(id: widget.id, name: widget.name),
-          const EstabDTR(),
-          const EstabOnsite(),
+          EstabDTR(),
+          // const EstabOnsite(),
           EstabRoom(ids: widget.id, name: widget.name),
         ],
       ),

@@ -43,42 +43,43 @@ class _NavbarState extends State<Navbar> {
               decoration: const BoxDecoration(),
               child: Column(
                 children: [
-                  Stack(children: <Widget>[
-                    SizedBox(
-                      height: 140,
-                      width: double.maxFinite,
-                      child: Image.asset(
-                        'assets/images/neon.jpg',
-                        fit: BoxFit.cover,
+                  Stack(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 140,
+                        width: double.maxFinite,
+                        child: Image.asset(
+                          'assets/images/neon.jpg',
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 15.0),
-                          child: ClipRRect(
-                            borderRadius: Style.borderRadius,
-                            child: InkWell(
-                              onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => const Profile(),
-                                //   ),
-                                // );
-                              },
-                              child: Image.asset(
-                                'assets/images/admin.png',
-                                height: 70,
-                                width: 70,
-                                fit: BoxFit.cover,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 15.0),
+                            child: ClipRRect(
+                              borderRadius: Style.borderRadius,
+                              child: InkWell(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => const Profile(),
+                                  //   ),
+                                  // );
+                                },
+                                child: Image.asset(
+                                  'assets/images/admin.png',
+                                  height: 70,
+                                  width: 70,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        StreamBuilder<UserModel>(
+                          StreamBuilder<UserModel>(
                             stream: _userStreamController.stream,
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
@@ -105,32 +106,36 @@ class _NavbarState extends State<Navbar> {
                                 );
                               }
                               return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Username...",
-                                          style: Style.navbartxt), // Use null safety check
-                                      Text("loading...",
-                                          textScaleFactor:
-                                              ScaleSize.textScaleFactor(
-                                                  context),
-                                          style: const TextStyle(
-                                              color: Colors.white))
-                                    ],
-                                  ),
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Username...",
+                                            style: Style
+                                                .navbartxt), // Use null safety check
+                                        Text("loading...",
+                                            textScaleFactor:
+                                                ScaleSize.textScaleFactor(
+                                                    context),
+                                            style: const TextStyle(
+                                                color: Colors.white))
+                                      ],
+                                    ),
                                   ],
                                 ),
                               );
-                            },)
-                      ],
-                    ),
-                  ],),
+                            },
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -150,19 +155,19 @@ class _NavbarState extends State<Navbar> {
                 Navigator.pop(context); // Close the drawer
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.calendar_today),
-              title: const Text('Attendance'),
-              onTap: () {
-                // Navigator.of(context).pop(false);
+            // ListTile(
+            //   leading: const Icon(Icons.calendar_today),
+            //   title: const Text('Attendance'),
+            //   onTap: () {
+            //     // Navigator.of(context).pop(false);
 
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => const DTRScreen(),
-                //   ),
-                // );
-              },
-            ),
+            //     // Navigator.of(context).push(
+            //     //   MaterialPageRoute(
+            //     //     builder: (context) => const DTRScreen(),
+            //     //   ),
+            //     // );
+            //   },
+            // ),
             const Divider(),
             ListTile(
               title: const Text('Log-out'),

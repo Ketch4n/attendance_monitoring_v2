@@ -22,17 +22,17 @@ class _ClassroomState extends State<Classroom> {
   // Future<void> _refreshData() async {
   //   await fetchUser(_userStreamController);
   // }
-String yourID = "";
-String admin_ID = "";
-String admin_name = "";
-String admin_email = "";
+  String yourID = "";
+  String admin_ID = "";
+  String admin_name = "";
+  String admin_email = "";
 
   Future<void> fetchClassmates(classmateStreamController) async {
-     final prefs = await SharedPreferences.getInstance();
-  final userId = prefs.getString('userId');
-  setState(() {
-    yourID = userId!;
-  });
+    final prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getString('userId');
+    setState(() {
+      yourID = userId!;
+    });
     final response = await http.post(
       Uri.parse('${Server.host}pages/student/classmate.php'),
       body: {'section_id': widget.ids},
@@ -43,11 +43,11 @@ String admin_email = "";
       final List<ClassmateModel> classmates = data
           .map((classmateData) => ClassmateModel.fromJson(classmateData))
           .toList();
-setState(() {
-  admin_ID = classmates[0].admin_id;
-  admin_name = classmates[0].admin_name;
-  admin_email = classmates[0].admin_email;
-});
+      setState(() {
+        admin_ID = classmates[0].admin_id;
+        admin_name = classmates[0].admin_name;
+        admin_email = classmates[0].admin_email;
+      });
 
       // Add the list of classmates to the stream
       classmateStreamController.add(classmates);
@@ -60,19 +60,16 @@ setState(() {
   void initState() {
     super.initState();
     fetchClassmates(_classmateStreamController);
-   
   }
 
   @override
   void dispose() {
     super.dispose();
     _classmateStreamController.close();
-   
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -102,19 +99,16 @@ setState(() {
                 const SizedBox(
                   width: 10,
                 ),
-             
-                 
-                 Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(admin_name, style: const TextStyle(fontSize: 18)),
-                        Text(
-                         admin_email,
-                          style: const TextStyle(fontSize: 12),
-                        )
-                      ],
-                    ),
-                 
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(admin_name, style: const TextStyle(fontSize: 18)),
+                    Text(
+                      admin_email,
+                      style: const TextStyle(fontSize: 12),
+                    )
+                  ],
+                ),
               ],
             ),
           ),
@@ -159,7 +153,10 @@ setState(() {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(classmate.student_id == yourID ? "${classmate.name} (You)" : classmate.name,
+                                      Text(
+                                          classmate.student_id == yourID
+                                              ? "${classmate.name} (You)"
+                                              : classmate.name,
                                           style: const TextStyle(fontSize: 18)),
                                       Text(
                                         classmate.email,
