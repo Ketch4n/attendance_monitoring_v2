@@ -166,7 +166,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       final SectionModel sec = sect2[index];
                       return AdminDashCard(
                           id: sec.id,
+                          uid: sec.admin_id,
                           name: sec.section_name,
+                          code: sec.code,
                           path: uRole == 'Admin' ? "class" : "room",
                           refreshCallback: _refreshData);
                     }),
@@ -191,7 +193,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
               title: Text(
                 uRole == "Admin" ? 'Section' : 'Establishment',
                 style: TextStyle(
-                    fontSize: 18, color: Colors.black, fontFamily: "NexaBold"),
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontFamily: "MontserratBold"),
               ),
               onPressed: (context) {
                 String purpose = uRole == "Admin" ? 'Section' : 'Establishment';

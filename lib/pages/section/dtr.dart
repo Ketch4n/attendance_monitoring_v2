@@ -32,7 +32,6 @@ class _dtrState extends State<dtr> {
     final folderName =
         'face_data/$section/$storedUserId'; // Specify your folder name
 
-    // List all files in the "face_data" folder
     try {
       final listResult = await storage.ref(folderName).listAll();
       setState(() {
@@ -42,6 +41,15 @@ class _dtrState extends State<dtr> {
     } catch (e) {
       print('Error listing files: $e');
       isLoading = false; // Data has failed to load
+    }
+  }
+
+  Future<void> deleteImage(Reference imageRef) async {
+    try {
+      await imageRef.delete();
+      _getImageReferences(); // Refresh the list after deletion
+    } catch (e) {
+      print('Error deleting file: $e');
     }
   }
 
@@ -55,42 +63,50 @@ class _dtrState extends State<dtr> {
               height: 80,
               width: double.maxFinite,
               child: Image.asset(
-               "assets/images/blue.jpg",
+                "assets/images/blue.jpg",
                 fit: BoxFit.cover,
               ),
             ),
             Positioned(
-             
               child: Column(
                 children: [
-                  const SizedBox(height: 30,),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   Row(
                     children: [
-                       const SizedBox(width: 20,),
+                      const SizedBox(
+                        width: 20,
+                      ),
                       ClipRRect(
-                                    borderRadius: Style.borderRadius,
-                                    child: Container(
-                                      color: Colors.white,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Image.asset(
-                                          'assets/nmsct.jpg',
-                                          height: 80,
-                                          width: 80,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5,),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom:15.0),
-                                    child: Text(widget.name,style: const TextStyle(
-                                      color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold
-                                    ),),
-                                  )
+                        borderRadius: Style.borderRadius,
+                        child: Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Image.asset(
+                              'assets/nmsct.jpg',
+                              height: 80,
+                              width: 80,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15.0),
+                        child: Text(
+                          widget.name,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )
                     ],
                   ),
-                
                 ],
               ),
             )
@@ -100,11 +116,11 @@ class _dtrState extends State<dtr> {
           padding: const EdgeInsets.all(10),
           child: GestureDetector(
             onTap: () async {
-             await Navigator.of(context).push(
+              await Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: ((context) => Camera(name: widget.name))),
               );
-            _getImageReferences();
+              _getImageReferences();
             },
             child: Container(
               height: 70,
@@ -141,18 +157,18 @@ class _dtrState extends State<dtr> {
           ),
         ),
         if (isLoading)
-        const Expanded(
+          const Expanded(
             child: Center(
               child: CircularProgressIndicator(),
             ),
           )
-          //  Expanded(
-          //   child: CardListSkeleton(
-          //     isCircularImage: true,
-          //     isBottomLinesActive: true,
-          //     length: 1,
-          //   ),
-          // )
+        //  Expanded(
+        //   child: CardListSkeleton(
+        //     isCircularImage: true,
+        //     isBottomLinesActive: true,
+        //     length: 1,
+        //   ),
+        // )
         else if (_imageReferences.isEmpty)
           const Expanded(
             child: Center(
@@ -192,6 +208,36 @@ class _dtrState extends State<dtr> {
                             }
                           }
                           return const Text('Fetching metadata...');
+                        },
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Delete Image'),
+                                content: Text(
+                                    'Are you sure you want to delete this image?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('Cancel'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('Delete'),
+                                    onPressed: () {
+                                      deleteImage(imageRef);
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                       ),
                       onTap: () {

@@ -166,7 +166,9 @@ class _EstabDashboardState extends State<EstabDashboard> {
                       final EstabModel sec = sect2[index];
                       return AdminDashCard(
                           id: sec.id,
+                          uid: sec.creator_id,
                           name: sec.establishment_name,
+                          code: sec.code,
                           path: uRole == 'Admin' ? "class" : "room",
                           refreshCallback: _refreshData);
                     }),
@@ -191,7 +193,9 @@ class _EstabDashboardState extends State<EstabDashboard> {
               title: Text(
                 uRole == "Admin" ? 'Section' : 'Establishment',
                 style: TextStyle(
-                    fontSize: 18, color: Colors.black, fontFamily: "NexaBold"),
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontFamily: "MontserratBold"),
               ),
               onPressed: (context) {
                 String purpose = uRole == "Admin" ? 'Section' : 'Establishment';

@@ -1,31 +1,53 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:attendance_monitoring/api/server.dart';
+import 'package:attendance_monitoring/api/user.dart';
 import 'package:attendance_monitoring/model/classmate.dart';
+import 'package:attendance_monitoring/model/user_model.dart';
+import 'package:attendance_monitoring/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../api/server.dart';
-import '../../style/style.dart';
+
 import 'package:http/http.dart' as http;
 
-class Classroom extends StatefulWidget {
-  const Classroom({super.key, required this.ids, required this.name});
+class AdminClassroom extends StatefulWidget {
+  const AdminClassroom(
+      {super.key, required this.ids, required this.uid, required this.name});
   final String ids;
+  final String uid;
   final String name;
   @override
-  State<Classroom> createState() => _ClassroomState();
+  State<AdminClassroom> createState() => _AdminClassroomState();
 }
 
-class _ClassroomState extends State<Classroom> {
+class _AdminClassroomState extends State<AdminClassroom> {
   final StreamController<List<ClassmateModel>> _classmateStreamController =
       StreamController<List<ClassmateModel>>();
   // Future<void> _refreshData() async {
   //   await fetchUser(_userStreamController);
+  final StreamController<UserModel> _userStreamController =
+      StreamController<UserModel>();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUser(_userStreamController);
+    fetchClassmates(_classmateStreamController);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _userStreamController.close();
+    _classmateStreamController.close();
+  }
+
   // }
   String yourID = "";
-  String admin_ID = "";
-  String admin_name = "";
-  String admin_email = "";
+  // String admin_ID = "";
+  // String admin_name = "";
+  // String admin_email = "";
 
   Future<void> fetchClassmates(classmateStreamController) async {
     final prefs = await SharedPreferences.getInstance();
@@ -43,29 +65,12 @@ class _ClassroomState extends State<Classroom> {
       final List<ClassmateModel> classmates = data
           .map((classmateData) => ClassmateModel.fromJson(classmateData))
           .toList();
-      setState(() {
-        admin_ID = classmates[0].admin_id;
-        admin_name = classmates[0].admin_name;
-        admin_email = classmates[0].admin_email;
-      });
 
       // Add the list of classmates to the stream
       classmateStreamController.add(classmates);
     } else {
       throw Exception('Failed to load data');
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchClassmates(_classmateStreamController);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _classmateStreamController.close();
   }
 
   @override
@@ -101,22 +106,32 @@ class _ClassroomState extends State<Classroom> {
                 const SizedBox(
                   width: 10,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(admin_name, style: const TextStyle(fontSize: 18)),
-                    Text(
-                      admin_email,
-                      style: const TextStyle(fontSize: 12),
-                    )
-                  ],
-                ),
+                StreamBuilder<UserModel>(
+                    stream: _userStreamController.stream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        UserModel user = snapshot.data!;
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(user.name + " (You)",
+                                style: const TextStyle(fontSize: 18)),
+                            Text(
+                              user.email,
+                              style: const TextStyle(fontSize: 12),
+                            )
+                          ],
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    }),
               ],
             ),
           ),
           const ListTile(
             title: Text(
-              "Classmates",
+              "Students",
               style: TextStyle(
                   color: Colors.blue,
                   fontSize: 20,
@@ -157,10 +172,7 @@ class _ClassroomState extends State<Classroom> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                          classmate.student_id == yourID
-                                              ? "${classmate.name} (You)"
-                                              : classmate.name,
+                                      Text(classmate.name,
                                           style: const TextStyle(fontSize: 18)),
                                       Text(
                                         classmate.email,
@@ -176,7 +188,7 @@ class _ClassroomState extends State<Classroom> {
                   );
                 } else if (!snapshot.hasData) {
                   return const Center(
-                    child: Text("No classmates found"),
+                    child: Text("No Students"),
                   );
                 } else {
                   return const Center(child: CircularProgressIndicator());

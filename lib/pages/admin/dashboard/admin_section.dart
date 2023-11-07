@@ -1,11 +1,15 @@
+import 'package:attendance_monitoring/pages/admin/dashboard/admin_classroom.dart';
 import 'package:attendance_monitoring/pages/admin/dashboard/admin_dtr.dart';
+import 'package:attendance_monitoring/pages/admin/dashboard/admin_section_tab.dart';
 import 'package:attendance_monitoring/pages/section/class.dart';
 import 'package:attendance_monitoring/pages/section/section.dart';
 import 'package:flutter/material.dart';
 
 class AdminSection extends StatefulWidget {
-  const AdminSection({super.key, required this.ids, required this.name});
+  const AdminSection(
+      {super.key, required this.ids, required this.uid, required this.name});
   final String ids;
+  final String uid;
   final String name;
 
   @override
@@ -19,14 +23,14 @@ class _AdminSectionState extends State<AdminSection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("AdminSection"),
+        title: const Text("Admin Section"),
         centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.grey[200],
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: 'DTR'),
+              icon: Icon(Icons.dashboard), label: 'Section'),
           BottomNavigationBarItem(
               icon: Icon(Icons.class_), label: 'Attendance'),
           BottomNavigationBarItem(icon: Icon(Icons.people), label: 'People'),
@@ -42,8 +46,10 @@ class _AdminSectionState extends State<AdminSection> {
         index: current,
         children: [
           Admindtr(name: widget.name),
-          SectionTab(),
-          Classroom(ids: widget.ids, name: widget.name),
+          AdminSectionTab(
+            name: widget.name,
+          ),
+          AdminClassroom(ids: widget.ids, uid: widget.uid, name: widget.name),
         ],
       ),
     );

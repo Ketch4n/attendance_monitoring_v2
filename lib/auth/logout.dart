@@ -14,13 +14,13 @@ logout(BuildContext context, purpose) {
       return CupertinoAlertDialog(
         title: Text(
           purpose == 'Logout' ? "Confirm Log out ?" : "Confirm Exit",
-          style: Style.nexaBold,
+          style: Style.MontserratBold,
         ),
         content: Text(
           purpose == 'Logout'
               ? 'You will be required to login again next time'
               : 'Are you sure you want to exit ?',
-          style: Style.nexaRegular,
+          style: Style.MontserratRegular,
         ),
         actions: <Widget>[
           TextButton(

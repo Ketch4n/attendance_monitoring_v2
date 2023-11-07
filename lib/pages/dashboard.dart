@@ -192,7 +192,7 @@ class _DashboardState extends State<Dashboard> {
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.black,
-                              fontFamily: "NexaBold"),
+                              fontFamily: "MontserratBold"),
                         ),
                         onPressed: (context) {
                           String purpose = "Section";
@@ -209,7 +209,7 @@ class _DashboardState extends State<Dashboard> {
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.green,
-                              fontFamily: "NexaBold"),
+                              fontFamily: "MontserratBold"),
                         ),
                         onPressed: (context) {
                           Navigator.of(context).pop(false);
@@ -221,7 +221,7 @@ class _DashboardState extends State<Dashboard> {
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.black,
-                              fontFamily: "NexaBold"),
+                              fontFamily: "MontserratBold"),
                         ),
                         onPressed: (context) {
                           String purpose = "Establishment";
@@ -238,7 +238,7 @@ class _DashboardState extends State<Dashboard> {
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.green,
-                              fontFamily: "NexaBold"),
+                              fontFamily: "MontserratBold"),
                         ),
                         onPressed: (context) {
                           Navigator.of(context).pop(false);
@@ -252,7 +252,7 @@ class _DashboardState extends State<Dashboard> {
                           style: const TextStyle(
                               fontSize: 18,
                               color: Colors.black,
-                              fontFamily: "NexaBold"),
+                              fontFamily: "MontserratBold"),
                         ),
                         onPressed: (context) {
                           String purpose =

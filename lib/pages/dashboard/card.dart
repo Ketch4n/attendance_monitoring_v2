@@ -1,6 +1,5 @@
 // ignore_for_file: unrelated_type_equality_checks
 
-
 import 'package:attendance_monitoring/api/leave.dart';
 
 import 'package:flutter/material.dart';
@@ -52,16 +51,15 @@ class _ContainerCardState extends State<ContainerCard> {
       widget.estabID,
     ];
     List<String> link = ['class', 'room'];
-  
+
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: Style.boxdecor
           .copyWith(borderRadius: const BorderRadius.all(Radius.circular(10))),
       child: InkWell(
         onTap: () {
-         
           // Navigator.of(context).push(MaterialPageRoute(
-          //     builder: (context) => Section( 
+          //     builder: (context) => Section(
           //      ids  : widget.sectID == "null"
           //               ? widget.estabID
           //               : widget.estabID == "null"
@@ -78,7 +76,6 @@ class _ContainerCardState extends State<ContainerCard> {
           //                   ? sectionIMG
           //                   : imagePaths[widget.index % imagePaths.length],
           //         )));
-                  
         },
         child: Stack(
           children: <Widget>[
@@ -94,18 +91,21 @@ class _ContainerCardState extends State<ContainerCard> {
             ),
             Column(children: [
               ListTile(
-                titleTextStyle: Style.nexaBold.copyWith(fontSize: 20),
+                titleTextStyle: Style.MontserratBold.copyWith(fontSize: 20),
                 iconColor: Colors.white,
                 title: Text(widget.section == "null"
                     ? widget.establishment
                     : widget.establishment == "null"
                         ? widget.section
                         : subnamePaths[widget.index % subnamePaths.length]),
-                subtitle: Text(widget.section == "null"
-                    ? estabNAME
-                    : widget.establishment == "null"
-                        ? sectionNAME
-                        : namePaths[widget.index % namePaths.length],style: const TextStyle(color: Colors.white),),
+                subtitle: Text(
+                  widget.section == "null"
+                      ? estabNAME
+                      : widget.establishment == "null"
+                          ? sectionNAME
+                          : namePaths[widget.index % namePaths.length],
+                  style: const TextStyle(color: Colors.white),
+                ),
                 // subtitle: Text("Supervisor"),
               )
             ]),
@@ -127,19 +127,18 @@ class _ContainerCardState extends State<ContainerCard> {
                 },
                 onSelected: (String value) async {
                   if (value == 'Leave') {
-                   String path = widget.section == "null"
-                          ? "room"
-                          : widget.establishment == "null"
-                              ? "class"
-                              : link[widget.index % link.length];
+                    String path = widget.section == "null"
+                        ? "room"
+                        : widget.establishment == "null"
+                            ? "class"
+                            : link[widget.index % link.length];
                     print(path);
                     await leaveClassRoom(context, path);
-                   
+
                     widget.refreshCallback();
                     print('Refresh Callback Triggered');
                   }
                   // print('Selected: $path');
-              
                 },
               ),
             )

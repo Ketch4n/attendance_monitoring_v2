@@ -20,14 +20,14 @@ showAlertDialog(BuildContext context, String title, String message) async {
       return CupertinoAlertDialog(
         title: Text(
           title,
-          style: Style.nexaBold.copyWith(
+          style: Style.MontserratBold.copyWith(
               color: title == 'Success' || title == 'Login success'
                   ? Colors.green
                   : Colors.orange),
         ),
         content: Text(
           message,
-          style: Style.nexaRegular,
+          style: Style.MontserratRegular,
         ),
         actions: <Widget>[
           TextButton(

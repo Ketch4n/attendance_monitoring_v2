@@ -108,6 +108,14 @@ flutter:
     - family: NexaRegular
       fonts:
        - asset: assets/fonts/NexaRegular.otf
+       
+    - family: MontserratBold
+      fonts:
+        - asset: assets/fonts/Montserrat-Bold.ttf
+     
+    - family: MontserratRegular
+      fonts:
+       - asset: assets/fonts/Montserrat-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

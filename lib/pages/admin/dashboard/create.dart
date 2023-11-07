@@ -124,14 +124,15 @@ class _CreateSectionState extends State<CreateSection> {
                               String title = "Name Empty !";
                               String message = "Input name";
                               await showAlertDialog(context, title, message);
-                            } else if (loc.isEmpty) {
+                            } else if (widget.role == "Establishment" &&
+                                loc.isEmpty) {
                               String title = "Invalid Location !";
                               String message = "register gps";
                               await showAlertDialog(context, title, message);
                             } else {
                               String title = "Success";
                               String message = "click to copy";
-                              String code = generateId();
+                              String code = generateAlphanumericId();
                               await CreateSectEstab(
                                 context,
                                 code,
@@ -139,7 +140,7 @@ class _CreateSectionState extends State<CreateSection> {
                                 loc,
                                 widget.admin_id,
                               );
-                              await pasteCode(context, title, message, code);
+                              // await pasteCode(context, title, message, code);
                               // String purpose = 'CreateSection';
                               // await CreateSectEstab(context, pin);
                               // await showAlertDialog(context, mess, path);
@@ -182,14 +183,14 @@ pasteCode(
       return CupertinoAlertDialog(
         title: Text(
           title,
-          style: Style.nexaBold.copyWith(
+          style: Style.MontserratBold.copyWith(
               color: title == 'Success' || title == 'Login success'
                   ? Colors.green
                   : Colors.orange),
         ),
         content: Text(
           message,
-          style: Style.nexaRegular,
+          style: Style.MontserratRegular,
         ),
         actions: <Widget>[
           TextButton(

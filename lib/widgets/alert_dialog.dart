@@ -15,13 +15,13 @@ class Alert_Dialog extends StatelessWidget {
           const Warning(),
           Text(
             "Username or Password",
-            style: Style.nexaBold,
+            style: Style.MontserratBold,
           ),
         ],
       ),
       content: Text(
         "Please Input Data",
-        style: Style.nexaRegular,
+        style: Style.MontserratRegular,
       ),
       actions: <Widget>[
         TextButton(

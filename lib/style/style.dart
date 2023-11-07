@@ -14,11 +14,11 @@ class Style {
   static BorderRadius borderRadius20 = BorderRadius.circular(20);
   static BorderRadius defaultradius = BorderRadius.circular(12);
   static TextStyle text = const TextStyle(
-      fontSize: 20, fontFamily: "NexaBold", color: Colors.white);
+      fontSize: 20, fontFamily: "MontserratBold", color: Colors.white);
   static TextStyle profileText = const TextStyle(
-      fontSize: 15, fontFamily: "NexaBold", color: Colors.black);
+      fontSize: 15, fontFamily: "MontserratBold", color: Colors.black);
   static TextStyle navbartxt = const TextStyle(
-      fontSize: 15, fontFamily: "NexaBold", color: Colors.white);
+      fontSize: 15, fontFamily: "MontserratBold", color: Colors.white);
   static TextStyle duck = const TextStyle(fontSize: 18, color: Colors.black54);
   static InputDecoration textdesign = InputDecoration(
     enabledBorder: OutlineInputBorder(
@@ -45,8 +45,10 @@ class Style {
     ],
   );
 
-  static TextStyle nexaBold = const TextStyle(fontFamily: "NexaBold");
-  static TextStyle nexaRegular = const TextStyle(fontFamily: "NexaRegular");
+  static TextStyle MontserratBold =
+      const TextStyle(fontFamily: "MontserratBold");
+  static TextStyle MontserratRegular =
+      const TextStyle(fontFamily: "MontserratRegular");
 
   static TextStyle subtitle = TextStyle(color: Colors.grey[600], fontSize: 16);
 }

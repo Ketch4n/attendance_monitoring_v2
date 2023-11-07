@@ -25,11 +25,11 @@ Future<void> successDialog(
       return CupertinoAlertDialog(
         title: Text(
           "SUCCESS !",
-          style: Style.nexaBold.copyWith(color: Colors.green),
+          style: Style.MontserratBold.copyWith(color: Colors.green),
         ),
         content: Text(
           mess + path,
-          style: Style.nexaRegular,
+          style: Style.MontserratRegular,
         ),
         actions: <Widget>[
           TextButton(

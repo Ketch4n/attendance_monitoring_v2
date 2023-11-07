@@ -23,16 +23,16 @@ class _EstabRoomState extends State<EstabRoom> {
   // Future<void> _refreshData() async {
   //   await fetchUser(_userStreamController);
   // }
-String yourID = "";
-String creator_ID = "";
-String creator_name = "";
-String creator_email = "";
+  String yourID = "";
+  String creator_ID = "";
+  String creator_name = "";
+  String creator_email = "";
   Future<void> fetchroomates(roomateStreamController) async {
-     final prefs = await SharedPreferences.getInstance();
-  final userId = prefs.getString('userId');
-  setState(() {
-    yourID = userId!;
-  });
+    final prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getString('userId');
+    setState(() {
+      yourID = userId!;
+    });
     final response = await http.post(
       Uri.parse('${Server.host}pages/student/roomate.php'),
       body: {'establishment_id': widget.ids},
@@ -43,11 +43,11 @@ String creator_email = "";
       final List<RoomateModel> roomates = data
           .map((roomateData) => RoomateModel.fromJson(roomateData))
           .toList();
-setState(() {
-  creator_ID = roomates[0].creator_id;
-  creator_name = roomates[0].creator_name;
-  creator_email = roomates[0].creator_email;
-});
+      setState(() {
+        creator_ID = roomates[0].creator_id;
+        creator_name = roomates[0].creator_name;
+        creator_email = roomates[0].creator_email;
+      });
 
       // Add the list of roomates to the stream
       roomateStreamController.add(roomates);
@@ -78,7 +78,9 @@ setState(() {
             title: Text(
               "Administrator",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20, fontFamily: "NexaBold"),
+                  color: Colors.blue,
+                  fontSize: 20,
+                  fontFamily: "MontserratBold"),
             ),
             subtitle: Divider(
               color: Colors.blue,
@@ -99,7 +101,7 @@ setState(() {
                 const SizedBox(
                   width: 10,
                 ),
-               Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(creator_name, style: const TextStyle(fontSize: 18)),
@@ -116,7 +118,9 @@ setState(() {
             title: Text(
               "Interns",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20, fontFamily: "NexaBold"),
+                  color: Colors.blue,
+                  fontSize: 20,
+                  fontFamily: "MontserratBold"),
             ),
             subtitle: Divider(
               color: Colors.blue,
@@ -153,8 +157,10 @@ setState(() {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                    Text(roomate.student_id == yourID ? 
-                                    "${roomate.name} (You)" : roomate.name,
+                                      Text(
+                                          roomate.student_id == yourID
+                                              ? "${roomate.name} (You)"
+                                              : roomate.name,
                                           style: const TextStyle(fontSize: 18)),
                                       Text(
                                         roomate.email,

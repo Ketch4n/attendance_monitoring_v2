@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
+import 'package:attendance_monitoring/widgets/settings_dropdown.dart';
 import 'package:flutter/material.dart';
 import '../api/user.dart';
 import '../model/user_model.dart';
@@ -86,6 +87,7 @@ class _ProfileState extends State<Profile> {
         const SizedBox(
           height: 20,
         ),
+        SettingsDropdown(),
         // Padding(
         //   padding: Style.padding,
         //   child: Container(
@@ -112,53 +114,7 @@ class _ProfileState extends State<Profile> {
         // SizedBox(
         //   height: 10,
         // ),
-        Padding(
-          padding: Style.padding,
-          child: Container(
-              height: 60,
-              width: double.maxFinite,
-              decoration:
-                  Style.boxdecor.copyWith(borderRadius: Style.defaultradius),
-              child: const ListTile(
-                // textColor: Style.themecolor,
-                // iconColor: Style.themecolor,
-                title: Row(
-                  children: [
-                    Icon(Icons.person),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("Account Information"),
-                  ],
-                ),
-                trailing: Icon(Icons.navigate_next),
-              )),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Padding(
-          padding: Style.padding,
-          child: Container(
-              height: 60,
-              width: double.maxFinite,
-              decoration:
-                  Style.boxdecor.copyWith(borderRadius: Style.defaultradius),
-              child: const ListTile(
-                // textColor: Style.themecolor,
-                // iconColor: Style.themecolor,
-                title: Row(
-                  children: [
-                    Icon(Icons.lock),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("Security and Privacy"),
-                  ],
-                ),
-                trailing: Icon(Icons.navigate_next),
-              )),
-        ),
+
         // Column(
         //   crossAxisAlignment: CrossAxisAlignment.start,
         //   children: [
@@ -193,7 +149,9 @@ Future showProfileEdit(BuildContext context) async {
           title: const Text(
             'Edit Details',
             style: TextStyle(
-                fontSize: 18, color: Colors.black, fontFamily: "NexaBold"),
+                fontSize: 18,
+                color: Colors.black,
+                fontFamily: "MontserratBold"),
           ),
           onPressed: (context) {
             Navigator.of(context).pop(false);
@@ -202,7 +160,9 @@ Future showProfileEdit(BuildContext context) async {
           title: const Text(
             'Change Profile',
             style: TextStyle(
-                fontSize: 18, color: Colors.black, fontFamily: "NexaBold"),
+                fontSize: 18,
+                color: Colors.black,
+                fontFamily: "MontserratBold"),
           ),
           onPressed: (context) {
             Navigator.of(context).pop(false);
@@ -211,7 +171,7 @@ Future showProfileEdit(BuildContext context) async {
     // cancelAction: CancelAction(
     //     title: const Text(
     //   'CANCEL',
-    //   style: TextStyle(fontSize: 18, fontFamily: "NexaBold"),
+    //   style: TextStyle(fontSize: 18, fontFamily: "MontserratBold"),
     // )), // onPressed parameter is optional by default will dismiss the ActionSheet
   );
 }

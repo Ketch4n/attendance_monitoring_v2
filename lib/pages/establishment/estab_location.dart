@@ -98,11 +98,12 @@ class _EstabLocationState extends State<EstabLocation> {
   Future<void> insertToday(String id) async {
     final prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userId');
+    final estab_id = widget.id;
     String defaultDATE = DateFormat('yyyy-MM-dd').format(DateTime.now());
     String apiUrl = '${Server.host}pages/student/establishment.php';
     Map<String, String> headers = {'Content-Type': 'application/json'};
     String jsonData =
-        '{"student_id": "$userId", "estab_id": "2","time_in_am":"$checkInAM","in_am":"$inAM", "time_out_am":"$checkOutAM","out_am":"$outAM","time_in_pm":"$checkInPM","in_pm":"$inPM","time_out_pm":"$checkOutPM","out_pm":"$outPM","date":"$defaultDATE"}';
+        '{"student_id": "$userId", "estab_id": "$estab_id","time_in_am":"$checkInAM","in_am":"$inAM", "time_out_am":"$checkOutAM","out_am":"$outAM","time_in_pm":"$checkInPM","in_pm":"$inPM","time_out_pm":"$checkOutPM","out_pm":"$outPM","date":"$defaultDATE"}';
     final response =
         await http.post(Uri.parse(apiUrl), headers: headers, body: jsonData);
     print(defaultDATE);
