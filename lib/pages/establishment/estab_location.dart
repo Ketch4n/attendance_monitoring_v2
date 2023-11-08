@@ -107,6 +107,7 @@ class _EstabLocationState extends State<EstabLocation> {
     final response =
         await http.post(Uri.parse(apiUrl), headers: headers, body: jsonData);
     print(defaultDATE);
+    today(_todayStream);
   }
 
   @override
@@ -367,7 +368,8 @@ class _EstabLocationState extends State<EstabLocation> {
                                         .format(DateTime.now());
                                     inAM =
                                         DateFormat('a').format(DateTime.now());
-
+                                    await insertToday(widget.id);
+                                    key.currentState!.reset();
                                     // prefs.setString('timeINAM', checkInAM);
                                   })
                                 : checkOutAM == "00:00:00"
@@ -376,7 +378,8 @@ class _EstabLocationState extends State<EstabLocation> {
                                             .format(DateTime.now());
                                         outAM = DateFormat('a')
                                             .format(DateTime.now());
-
+                                        await insertToday(widget.id);
+                                        key.currentState!.reset();
                                         //  prefs.setString('timeOUTAM', checkOutAM);
                                       })
                                     : checkInPM == "00:00:00"
@@ -385,7 +388,8 @@ class _EstabLocationState extends State<EstabLocation> {
                                                 .format(DateTime.now());
                                             inPM = DateFormat('a')
                                                 .format(DateTime.now());
-
+                                            await insertToday(widget.id);
+                                            key.currentState!.reset();
                                             //  prefs.setString('timeINPM', checkInPM);
                                           })
                                         : setState(() async {
@@ -393,12 +397,10 @@ class _EstabLocationState extends State<EstabLocation> {
                                                 .format(DateTime.now());
                                             outPM = DateFormat('a')
                                                 .format(DateTime.now());
-
+                                            await insertToday(widget.id);
+                                            key.currentState!.reset();
                                             //  prefs.setString('timeOUTPM', checkOutPM);
                                           });
-                            await insertToday(widget.id);
-                            setState(() {});
-                            key.currentState!.reset();
                           });
                     },
                   ),
