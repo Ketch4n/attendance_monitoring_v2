@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:attendance_monitoring/api/server.dart';
+
+import 'package:attendance_monitoring/auth/server.dart';
 import 'package:attendance_monitoring/widgets/dtr_details.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;

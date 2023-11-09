@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'package:attendance_monitoring/auth/server.dart';
 import 'package:attendance_monitoring/model/admin_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../api/server.dart';
+
 import '../model/stream_user_model.dart';
 import '../model/user_model.dart';
 

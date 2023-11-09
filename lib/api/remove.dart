@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:attendance_monitoring/api/server.dart';
+import 'package:attendance_monitoring/auth/server.dart';
 import 'package:attendance_monitoring/widgets/show_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

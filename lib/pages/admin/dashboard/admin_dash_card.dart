@@ -54,7 +54,9 @@ class _AdminDashCardState extends State<AdminDashCard> {
           child: Stack(
             children: <Widget>[
               Image.asset(
-                'assets/images/blue.jpg',
+                widget.path == "class"
+                    ? 'assets/images/blue.jpg'
+                    : 'assets/images/green.jpg',
                 fit: BoxFit.cover,
                 height: 120,
                 width: double.maxFinite,

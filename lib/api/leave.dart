@@ -3,10 +3,12 @@ import 'package:attendance_monitoring/widgets/show_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'server.dart';
+import '../auth/server.dart';
 
 Future<void> leaveClassRoom(
-    context, String path, ) async {
+  context,
+  String path,
+) async {
   final prefs = await SharedPreferences.getInstance();
   final id = prefs.getString('userId');
 // final ref = path == 'room' ? 'establishment_id' : 'section_id';

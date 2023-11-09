@@ -29,10 +29,10 @@ class MyApp extends StatelessWidget {
       title: 'Attendance Monitoring',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        // primarySwatch: Colors.blue,
 
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        // useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
       ),
       home: const Auth(),
        localizationsDelegates: const [

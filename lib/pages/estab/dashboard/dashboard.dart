@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
-import 'package:attendance_monitoring/api/server.dart';
+import 'package:attendance_monitoring/auth/server.dart';
+
 import 'package:attendance_monitoring/model/establishment_model.dart';
 import 'package:attendance_monitoring/model/section_model.dart';
 import 'package:attendance_monitoring/model/user_model.dart';

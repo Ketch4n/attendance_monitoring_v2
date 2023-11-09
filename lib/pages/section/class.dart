@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:attendance_monitoring/auth/server.dart';
 import 'package:attendance_monitoring/model/classmate.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../api/server.dart';
+
 import '../../style/style.dart';
 import 'package:http/http.dart' as http;
 

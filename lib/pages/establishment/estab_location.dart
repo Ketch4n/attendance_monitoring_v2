@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:attendance_monitoring/api/server.dart';
+import 'package:attendance_monitoring/auth/server.dart';
 import 'package:attendance_monitoring/model/today_model.dart';
 import 'package:attendance_monitoring/widgets/dtr_details.dart';
 import 'package:flutter/material.dart';

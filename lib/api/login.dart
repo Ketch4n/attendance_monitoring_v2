@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:attendance_monitoring/auth/server.dart';
 import 'package:attendance_monitoring/pages/admin/home.dart';
 import 'package:attendance_monitoring/pages/estab/home.dart';
 import 'package:attendance_monitoring/pages/home.dart';
@@ -8,7 +9,7 @@ import 'package:attendance_monitoring/widgets/show_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'server.dart'; // Make sure you import your server configuration
+// Make sure you import your server configuration
 
 Future<void> login(
   BuildContext context,

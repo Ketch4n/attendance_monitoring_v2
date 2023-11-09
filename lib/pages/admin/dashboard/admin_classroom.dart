@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:attendance_monitoring/api/server.dart';
 import 'package:attendance_monitoring/api/user.dart';
+import 'package:attendance_monitoring/auth/server.dart';
 import 'package:attendance_monitoring/model/classmate.dart';
 import 'package:attendance_monitoring/model/user_model.dart';
 import 'package:attendance_monitoring/style/style.dart';

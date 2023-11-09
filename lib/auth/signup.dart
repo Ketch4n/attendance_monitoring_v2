@@ -2,7 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:attendance_monitoring/api/server.dart';
+import 'package:attendance_monitoring/auth/server.dart';
 import 'package:attendance_monitoring/widgets/generate_id.dart';
 import 'package:attendance_monitoring/widgets/show_dialog.dart';
 import 'package:email_validator/email_validator.dart';

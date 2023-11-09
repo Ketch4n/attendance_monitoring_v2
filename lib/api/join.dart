@@ -3,16 +3,16 @@ import 'package:attendance_monitoring/widgets/show_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'server.dart';
+import '../auth/server.dart';
 
-Future<void> joinClassRoom(
-    context, String path, String ref, String pin ) async {
+Future<void> joinClassRoom(context, String path, String ref, String pin) async {
   final prefs = await SharedPreferences.getInstance();
   final id = prefs.getString('userId');
   final sub = ref == 'room' ? 'establishment_id' : 'section_id';
   String apiUrl = '${Server.host}pages/student/join.php';
   Map<String, String> headers = {'Content-Type': 'application/json'};
-  String jsonData = '{"id": "$id", "path": "$path","ref":"$ref", "sub":"$sub","code":"$pin"}';
+  String jsonData =
+      '{"id": "$id", "path": "$path","ref":"$ref", "sub":"$sub","code":"$pin"}';
   final response =
       await http.post(Uri.parse(apiUrl), headers: headers, body: jsonData);
   final jsonResponse = json.decode(response.body);

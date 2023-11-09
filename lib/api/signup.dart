@@ -5,7 +5,7 @@ import 'package:attendance_monitoring/auth/login.dart';
 import 'package:attendance_monitoring/widgets/show_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'server.dart';
+import '../auth/server.dart';
 
 Future signUp(BuildContext context, String email, String password, String id,
     String name, String roleController) async {
